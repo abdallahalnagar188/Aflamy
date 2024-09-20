@@ -1,0 +1,151 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_120sdp"
+    android:layout_marginHorizontal="@dimen/_8sdp"
+    android:layout_marginVertical="@dimen/_6sdp"
+    android:background="@color/black_low"
+    app:cardCornerRadius="@dimen/_10sdp"
+    app:cardElevation="@dimen/_6sdp">
+    <!--    android:foreground="?android:attr/selectableItemBackground"-->
+    <!--    >-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_low">
+
+        <!-- Movie Poster -->
+        <ImageView
+            android:id="@+id/moviePoster"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/iv_movie"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_min="@dimen/_60sdp" />
+
+        <!-- Movie Title -->
+        <TextView
+            android:id="@+id/movieTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Spider-Man: No Way Home"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/moviePoster"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Movie Rating -->
+
+        <ImageView
+            android:id="@+id/iv_star_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_star_rate"
+            app:layout_constraintStart_toStartOf="@id/movieTitle"
+            app:layout_constraintTop_toBottomOf="@id/movieTitle"
+            app:tint="@color/yellow" />
+
+        <TextView
+            android:id="@+id/movieRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8.5"
+            android:textColor="@android:color/holo_orange_light"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/monstrate"
+            app:layout_constraintBottom_toTopOf="@+id/movieGenre"
+            app:layout_constraintStart_toEndOf="@id/iv_star_rate"
+            app:layout_constraintTop_toBottomOf="@id/movieTitle" />
+
+        <!-- Movie Genre -->
+
+        <ImageView
+            android:id="@+id/iv_category"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:layout_marginVertical="@dimen/_4sdp"
+            android:src="@drawable/ic_category_movies"
+            android:padding="@dimen/_1sdp"
+            app:layout_constraintStart_toStartOf="@id/movieTitle"
+            app:layout_constraintTop_toBottomOf="@id/iv_star_rate"
+            app:tint="@color/gray_low" />
+        <!-- Genre Text -->
+        <TextView
+            android:id="@+id/movieGenre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Action"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/_12ssp"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:fontFamily="@font/poppins_reg"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_category"
+            app:layout_constraintStart_toEndOf="@id/iv_category"
+            app:layout_constraintTop_toTopOf="@id/iv_category" />
+
+        <!-- Calendar Icon for Year -->
+        <ImageView
+            android:id="@+id/iv_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_4sdp"
+            android:src="@drawable/ic_calender"
+            app:layout_constraintStart_toStartOf="@+id/iv_category"
+            app:layout_constraintTop_toBottomOf="@id/movieGenre"
+            app:tint="@color/gray_low" />
+
+        <!-- Year Text -->
+        <TextView
+            android:id="@+id/movieYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2021"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/_12ssp"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:fontFamily="@font/poppins_reg"
+
+            app:layout_constraintStart_toEndOf="@id/iv_calendar"
+            app:layout_constraintTop_toTopOf="@id/iv_calendar"
+            app:layout_constraintBottom_toBottomOf="@id/iv_calendar"
+            />
+
+        <!-- Clock Icon for Duration -->
+        <ImageView
+            android:id="@+id/iv_clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_tiem"
+            android:layout_marginVertical="@dimen/_4sdp"
+            app:layout_constraintStart_toStartOf="@id/iv_calendar"
+            app:layout_constraintTop_toBottomOf="@id/movieYear"
+            app:tint="@color/gray_low" />
+
+        <!-- Duration Text -->
+        <TextView
+            android:id="@+id/movieDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="139 minutes"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/_12ssp"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:fontFamily="@font/poppins_reg"
+
+            app:layout_constraintBottom_toBottomOf="@id/iv_clock"
+            app:layout_constraintStart_toEndOf="@id/iv_clock"
+            app:layout_constraintTop_toTopOf="@id/iv_clock" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

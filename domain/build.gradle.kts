@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    kotlin("kapt")
+    id ("kotlin-parcelize")
 }
 
 android {
@@ -40,4 +42,17 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation ("com.google.code.gson:gson:2.9.1")
+    implementation ("androidx.room:room-runtime:2.5.1")
+    kapt ("androidx.room:room-compiler:2.5.1")
+//    implementation(project(":data"))
+//    implementation(project(":app"))
+    val room_version = "2.5.0" // Or use the latest version
+    implementation( "androidx.room:room-runtime:$room_version")
+    implementation( "androidx.room:room-ktx:$room_version") // Add this line
+    kapt( "androidx.room:room-compiler:$room_version")
+    implementation ("androidx.paging:paging-runtime:3.2.0")
+
+    // For Kotlin coroutines support
+    implementation ("androidx.paging:paging-common-ktx:3.2.0")
 }

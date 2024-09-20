@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.aflamy.presentation.ui.splash.SplashFragment"
+        android:label="Splash Fragment"
+        tools:layout="@layout/fragment_spalsh">
+        <action
+            android:id="@+id/action_firstFragment_to_secondFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.aflamy.presentation.ui.home.HomeFragment"
+        android:label="Home Fragment"
+        tools:layout="@layout/fragment_home">
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.aflamy.presentation.ui.search.SearchFragment"
+        android:label="Search Fragment"
+        tools:layout="@layout/fragment_search">
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.example.aflamy.presentation.ui.favorite.FavoriteFragment"
+        android:label="Favorite Fragment"
+        tools:layout="@layout/fragment_favorite">
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.aflamy.presentation.ui.settings.SettingsFragment"
+        android:label="Settings Fragment"
+        tools:layout="@layout/fragment_settings">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/moviesDetailsFragment"
+        android:name="com.example.aflamy.presentation.ui.moviesDetails.MoviesDetailsFragment"
+        android:label="Movies Details Fragment"
+        tools:layout="@layout/fragment_movies_details">
+
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/seeMorePopularMoviesFragment"
+        android:name="com.example.aflamy.presentation.ui.home.more.popular.SeeMorePopularMoviesFragment"
+        android:label="See More Popular Movies Fragment"
+        tools:layout="@layout/fragment_see_more_popular_movies">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/seeMoreTopRateMoviesFragment"
+        android:name="com.example.aflamy.presentation.ui.home.more.topRate.SeeMoreTopRateMoviesFragment"
+        android:label="See More Top Rate Popular Movies Fragment"
+        tools:layout="@layout/fragment_see_more_popular_movies">
+
+    </fragment>
+
+</navigation>

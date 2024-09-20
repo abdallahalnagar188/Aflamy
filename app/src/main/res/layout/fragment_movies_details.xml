@@ -1,0 +1,250 @@
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1D1D1D"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/_8sdp">
+
+        <!-- Top Back Button and Bookmark Icon -->
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/btnBookmark"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            app:tint="@color/red"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_wish_border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+         />
+
+        <!-- Movie Banner -->
+        <ImageView
+            android:id="@+id/imgBanner"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/rounded"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/iv_movie"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnBack" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_small"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_120sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:layout_constraintBottom_toTopOf="@id/movieDetails"
+            app:layout_constraintStart_toStartOf="@id/imgBanner"
+            app:layout_constraintTop_toTopOf="@+id/imgBanner">
+
+            <ImageView
+                android:id="@+id/ivMovie"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:src="@drawable/iv_movie" />
+        </androidx.cardview.widget.CardView>
+
+
+        <!-- Movie Title -->
+        <TextView
+            android:id="@+id/tvMovieTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:maxLines="2"
+            tools:text="Spiderman No Way Home"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/imgRating"
+            app:layout_constraintStart_toEndOf="@id/card_view_small"
+            app:layout_constraintTop_toBottomOf="@id/imgBanner" />
+
+        <!-- Movie Rating -->
+
+        <ImageView
+            android:id="@+id/imgRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:layout_marginBottom="@dimen/_1sdp"
+            android:background="@drawable/ic_star_rate"
+            android:backgroundTint="@color/yellow"
+            app:layout_constraintBottom_toBottomOf="@id/tvRating"
+            app:layout_constraintEnd_toStartOf="@+id/tvRating"
+            app:layout_constraintTop_toTopOf="@id/tvRating"
+            app:tint="@color/yellow" />
+
+        <TextView
+            android:id="@+id/tvRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:padding="@dimen/_2sdp"
+            tools:text="9.5"
+            android:textColor="#FFD700"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgBanner" />
+
+        <!-- Movie Details (Year, Duration, Genre) -->
+        <LinearLayout
+            android:id="@+id/movieDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvMovieTitle">
+
+            <TextView
+                android:id="@+id/tvYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:padding="@dimen/_4sdp"
+                tools:text="2021"
+                android:textColor="#CCCCCC"
+                android:textSize="@dimen/_10ssp" />
+
+            <TextView
+                android:id="@+id/tvDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:fontFamily="@font/poppins_medium"
+                android:padding="@dimen/_4sdp"
+                tools:text="148 Minutes"
+                android:textColor="#CCCCCC"
+                android:textSize="@dimen/_10ssp" />
+
+            <TextView
+                android:id="@+id/tvGenre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:padding="@dimen/_4sdp"
+                android:text="Action"
+                android:textColor="#CCCCCC"
+                android:textSize="@dimen/_10ssp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- About Movie Section -->
+        <TextView
+            android:id="@+id/movie_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_6sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Movie Types"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movieDetails" />
+
+        <LinearLayout
+            android:id="@+id/movie_types"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_type">
+
+            <TextView
+                android:id="@+id/movie_type_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_8sdp"
+                tools:text="Action"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="@dimen/_10ssp"
+                android:textColor="@color/yellow" />
+
+            <TextView
+                android:id="@+id/movie_type_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="@dimen/_10ssp"
+                android:padding="@dimen/_8sdp"
+                tools:text="Comedy"
+
+                android:textColor="@color/yellow" />
+
+            <TextView
+                android:id="@+id/movie_type_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_8sdp"
+                tools:text="Drama"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="@dimen/_10ssp"
+                android:textColor="@color/yellow" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tvAboutMovie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="About Movie"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_types" />
+
+        <!-- Movie Description -->
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:fontFamily="@font/poppins_medium"
+            tools:text="From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains..."
+            android:textColor="#BBBBBB"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvAboutMovie" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
