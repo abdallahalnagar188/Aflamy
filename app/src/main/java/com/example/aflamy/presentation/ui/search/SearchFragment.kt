@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -14,7 +13,7 @@ import com.example.aflamy.R
 import com.example.aflamy.constance.API_Key
 import com.example.aflamy.databinding.FragmentSearchBinding
 import com.example.aflamy.presentation.adapter.search.SearchPagingAdapter
-import com.example.aflamy.presentation.ui.BindingFragment
+import com.example.aflamy.presentation.ui.BaseFragment
 import com.example.aflamy.presentation.viewmodel.SearchViewModel
 import com.example.domain.entity.models.MovieModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +28,7 @@ import android.text.TextWatcher
 import com.example.aflamy.genrel.navOptionsAnimation
 
 @AndroidEntryPoint
-class SearchFragment : BindingFragment<FragmentSearchBinding>(),
+class SearchFragment : BaseFragment<FragmentSearchBinding>(),
     SearchPagingAdapter.OnItemClickListener {
 
     override val bindingInflater: (LayoutInflater) -> ViewBinding

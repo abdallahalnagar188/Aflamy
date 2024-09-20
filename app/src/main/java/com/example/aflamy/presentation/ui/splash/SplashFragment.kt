@@ -9,9 +9,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.example.aflamy.R
 import com.example.aflamy.databinding.FragmentSpalshBinding
-import com.example.aflamy.presentation.ui.BindingFragment
+import com.example.aflamy.presentation.ui.BaseFragment
 
-class SplashFragment : BindingFragment<FragmentSpalshBinding>() {
+class SplashFragment : BaseFragment<FragmentSpalshBinding>() {
 
     override val bindingInflater: (LayoutInflater) -> ViewBinding
         get() = FragmentSpalshBinding::inflate

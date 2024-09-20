@@ -10,14 +10,13 @@ import com.example.aflamy.R
 import com.example.aflamy.databinding.FragmentFavoriteBinding
 import com.example.aflamy.genrel.navOptionsAnimation
 import com.example.aflamy.presentation.adapter.wishlist.WishListAdapter
-import com.example.aflamy.presentation.ui.BindingFragment
+import com.example.aflamy.presentation.ui.BaseFragment
 import com.example.aflamy.presentation.viewmodel.WishlistViewModel
 import com.example.domain.entity.models.MovieModelForLocal
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class FavoriteFragment : BindingFragment<FragmentFavoriteBinding>(),
+class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>(),
     WishListAdapter.OnItemClickListener {
 
     override val bindingInflater: (LayoutInflater) -> ViewBinding

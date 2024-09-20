@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.example.aflamy.presentation.dialog.LoadingDialog
+import com.example.domain.state.NetworkExtensionsActions
 
 
-abstract class BindingFragment<out T : ViewBinding> : Fragment() {
+abstract class BaseFragment<out T : ViewBinding> : Fragment(),NetworkExtensionsActions {
 
     private var _binding: ViewBinding? = null
 
@@ -36,4 +38,12 @@ abstract class BindingFragment<out T : ViewBinding> : Fragment() {
         _binding = null
 
     }
+
+    override fun onLoad(showLoading: Boolean) {
+        super.onLoad(showLoading)
+        LoadingDialog.showDialog()
+        if (showLoading) LoadingDialog.showDialog()
+        else LoadingDialog.dismissDialog()
+    }
+
 }

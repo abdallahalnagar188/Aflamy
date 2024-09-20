@@ -15,7 +15,7 @@ import com.example.aflamy.R
 import com.example.aflamy.constance.API_Key
 import com.example.aflamy.databinding.FragmentMoviesDetailsBinding
 import com.example.aflamy.presentation.dialog.LoadingDialog
-import com.example.aflamy.presentation.ui.BindingFragment
+import com.example.aflamy.presentation.ui.BaseFragment
 import com.example.aflamy.presentation.viewmodel.MovieDetailsViewModel
 import com.example.aflamy.presentation.viewmodel.WishlistViewModel
 import com.example.domain.entity.dto.movieDetails.MovieDetailsResponse
@@ -26,7 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MoviesDetailsFragment : BindingFragment<FragmentMoviesDetailsBinding>() {
+class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>() {
 
     override val bindingInflater: (LayoutInflater) -> ViewBinding
         get() = FragmentMoviesDetailsBinding::inflate

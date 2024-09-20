@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.viewbinding.ViewBinding
 import com.example.aflamy.databinding.FragmentSettingsBinding
-import com.example.aflamy.presentation.ui.BindingFragment
+import com.example.aflamy.presentation.ui.BaseFragment
 
 
-class SettingsFragment : BindingFragment<FragmentSettingsBinding>() {
+class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
     override val bindingInflater: (LayoutInflater) -> ViewBinding
         get() = FragmentSettingsBinding::inflate

@@ -1,7 +1,9 @@
 package com.example.data.remote
 
+import com.example.domain.entity.BaseResponse
 import com.example.domain.entity.dto.movieDetails.MovieDetailsResponse
 import com.example.domain.entity.dto.newPlaying.NewPlayingResponse
+import com.example.domain.entity.dto.newPlaying.NowPlayingMovieResponse
 import com.example.domain.entity.dto.popularMovies.PopularMoviesResponse
 import com.example.domain.entity.dto.search.movies.SearchResponse
 import com.example.domain.entity.dto.topRate.TopRateMoviesResponse
@@ -26,10 +28,10 @@ interface Api {
     ): TopRateMoviesResponse
 
     @GET("movie/now_playing")
-    suspend fun getNewPlayingMovies(
+   suspend fun getNewPlayingMovies(
         @Query("api_key") apiKey: String,
         @Query("page") page: Int = 2
-    ): NewPlayingResponse
+    ): BaseResponse<List<NowPlayingMovieResponse>>
 
     @GET("movie/upcoming")
     suspend fun getUpComingMovies(

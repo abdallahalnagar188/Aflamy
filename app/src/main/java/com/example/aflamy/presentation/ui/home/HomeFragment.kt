@@ -14,22 +14,24 @@ import com.example.aflamy.R
 import com.example.aflamy.constance.API_Key
 import com.example.aflamy.databinding.FragmentHomeBinding
 import com.example.aflamy.genrel.navOptionsAnimation
-import com.example.aflamy.genrel.navOptionsFromBottomAnimation
 import com.example.aflamy.presentation.adapter.home.RvHomeNowPlayingMoviesAdapter
 import com.example.aflamy.presentation.adapter.home.RvHomePopularMoviesAdapter
 import com.example.aflamy.presentation.adapter.home.RvHomeTopRateMoviesAdapter
 import com.example.aflamy.presentation.adapter.home.RvHomeUpComingMoviesAdapter
 import com.example.aflamy.presentation.dialog.LoadingDialog
-import com.example.aflamy.presentation.ui.BindingFragment
+import com.example.aflamy.presentation.ui.BaseFragment
+import com.example.aflamy.presentation.ui.home.viewmodel.NewPlayingMoviesViewModel
 import com.example.aflamy.presentation.viewmodel.HomeViewModel
+import com.example.domain.entity.dto.newPlaying.NowPlayingMovieResponse
 import com.example.domain.entity.models.MovieModel
 import com.example.domain.state.UiState
+import com.example.domain.state.applyCommonSideEffects
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : BindingFragment<FragmentHomeBinding>(),
+class HomeFragment : BaseFragment<FragmentHomeBinding>(),
     RvHomePopularMoviesAdapter.OnItemClickListener,
     RvHomeTopRateMoviesAdapter.OnItemClickListener,
     RvHomeNowPlayingMoviesAdapter.OnItemClickListener,
@@ -39,6 +41,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(),
         get() = FragmentHomeBinding::inflate
 
     private val homeViewModel: HomeViewModel by viewModels()
+    private val nowMovieViewModel: NewPlayingMoviesViewModel by viewModels()
 
 
     @Inject
@@ -81,8 +84,8 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(),
     private fun fetchMovies() {
         homeViewModel.getPopularMovies(API_Key)
         homeViewModel.getTopRateMovies(API_Key)
-        homeViewModel.getNewPlayingMovies(API_Key)
         homeViewModel.getUpComingMovies(API_Key)
+        nowMovieViewModel.getNewPlayingMovies(API_Key)
 
         fetchPopularMovies()
         fetchTopRateMovies()
@@ -90,6 +93,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(),
         fetchUpComingMovies()
 
     }
+
 
     private fun setupListeners() {
         binding.tvSeeMorePopularMovies.setOnClickListener {
@@ -204,45 +208,20 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(),
 
     private fun fetchNowPlayingMovies() {
         lifecycleScope.launch {
-            homeViewModel.newPlayingMovies.collect { state ->
-                when (state) {
-                    is UiState.Loading -> {
-                        LoadingDialog.showDialog()
-                    }
+            nowMovieViewModel.newPlayingMovies.collect { state ->
+            state.applyCommonSideEffects(this@HomeFragment) {
 
-                    is UiState.Success -> {
-                        LoadingDialog.dismissDialog()
-                        setupNowPlayingRv(state.data ?: emptyList())
-                        Log.e("TAG", "fetchNowPlayingMovies: ${state.data}")
-                    }
+                setupNowPlayingRv(toMovieModel(it.results ?: emptyList()))
+                Log.e("now playing call", "fetchNowPlayingMovies: ${it.results}")
+            }
 
-                    is UiState.Error -> {
-                        LoadingDialog.dismissDialog()
-                        Toast.makeText(
-                            requireContext(),
-                            state.message?.asString(requireContext()),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Log.e(
-                            "TAG",
-                            "fetchNowPlayingMovies: ${state.message?.asString(requireContext())}"
-                        )
-                    }
-
-                    is UiState.Empty -> {
-                        LoadingDialog.dismissDialog()
-                        Toast.makeText(
-                            requireContext(),
-                            "No now playing movies found",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Log.e("TAG", "fetchNowPlayingMovies: No now playing movies found")
-                    }
-                }
+            }
             }
         }
-    }
 
+    private fun toMovieModel(list:List<NowPlayingMovieResponse>):List<MovieModel>{
+        return list.map { it.toMovieModel() }
+    }
 
     private fun fetchUpComingMovies() {
         lifecycleScope.launch {

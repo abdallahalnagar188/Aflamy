@@ -2,7 +2,7 @@ package com.example.domain.entity.dto.movieDetails
 
 
 import com.google.gson.annotations.SerializedName
-
+//Moshi
 data class MovieDetailsResponse(
     @SerializedName("adult")
     val adult: Boolean?,

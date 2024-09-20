@@ -32,6 +32,7 @@ class HomeViewModel @Inject constructor(
     private val getTopRateMoviesInPagesUseCase: GetTopRateMoviesInPages
 ) : ViewModel() {
 
+    //---------------------------------------------------------------------------//
     private val _popularMovies: MutableStateFlow<UiState<List<MovieModel>>> = MutableStateFlow(UiState.Empty())
     val popularMovies: StateFlow<UiState<List<MovieModel>>> get() = _popularMovies
 
@@ -51,7 +52,7 @@ class HomeViewModel @Inject constructor(
         return getTopRateMoviesInPagesUseCase(apiKey).cachedIn(viewModelScope)
     }
 
-    // Refactored function to handle UI state for popular movies
+
     fun getPopularMovies(apiKey: String) {
         viewModelScope.launch {
             try {
@@ -71,7 +72,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    // Refactored function to handle UI state for top-rated movies
+
     fun getTopRateMovies(apiKey: String) {
         viewModelScope.launch {
             try {
@@ -91,27 +92,26 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    // Refactored function to handle UI state for new playing movies
-    fun getNewPlayingMovies(apiKey: String) {
-        viewModelScope.launch {
-            try {
-                _newPlayingMovies.value = UiState.Loading()
 
-                val list = getNewPlayingMoviesUseCase(apiKey).results?.map { it.toMovieModel() }
+//    fun getNewPlayingMovies(apiKey: String) {
+//        viewModelScope.launch {
+//            try {
+//                _newPlayingMovies.value = UiState.Loading()
+//
+//                val list = getNewPlayingMoviesUseCase(apiKey)?.map { it.toMovieModel() }
+//
+//                if (list.isNullOrEmpty()) {
+//                    _newPlayingMovies.value = UiState.Empty()
+//                } else {
+//                    _newPlayingMovies.value = UiState.Success(list)
+//                }
+//
+//            } catch (e: Exception) {
+//                _newPlayingMovies.value = UiState.Error(UiText.StringResource(R.string.error_message))
+//            }
+//        }
+//    }
 
-                if (list.isNullOrEmpty()) {
-                    _newPlayingMovies.value = UiState.Empty()
-                } else {
-                    _newPlayingMovies.value = UiState.Success(list)
-                }
-
-            } catch (e: Exception) {
-                _newPlayingMovies.value = UiState.Error(UiText.StringResource(R.string.error_message))
-            }
-        }
-    }
-
-    // Already refactored
     fun getUpComingMovies(apiKey: String) {
         viewModelScope.launch {
             try {

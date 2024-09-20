@@ -13,7 +13,7 @@ import com.example.aflamy.databinding.FragmentSeeMorePopularMoviesBinding
 import com.example.aflamy.genrel.navOptionsAnimation
 import com.example.aflamy.presentation.adapter.home.PopularMoviesPagingAdapter
 import com.example.aflamy.presentation.dialog.LoadingDialog
-import com.example.aflamy.presentation.ui.BindingFragment
+import com.example.aflamy.presentation.ui.BaseFragment
 import com.example.aflamy.presentation.viewmodel.HomeViewModel
 import com.example.domain.entity.models.MovieModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SeeMoreTopRateMoviesFragment : BindingFragment<FragmentSeeMorePopularMoviesBinding>(),
+class SeeMoreTopRateMoviesFragment : BaseFragment<FragmentSeeMorePopularMoviesBinding>(),
     PopularMoviesPagingAdapter.OnItemClickListener {
 
     override val bindingInflater: (LayoutInflater) -> ViewBinding
