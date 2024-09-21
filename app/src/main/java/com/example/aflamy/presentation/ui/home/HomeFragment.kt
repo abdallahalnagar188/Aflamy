@@ -210,9 +210,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
         lifecycleScope.launch {
             nowMovieViewModel.newPlayingMovies.collect { state ->
             state.applyCommonSideEffects(this@HomeFragment) {
-
                 setupNowPlayingRv(toMovieModel(it.results ?: emptyList()))
-                Log.e("now playing call", "fetchNowPlayingMovies: ${it.results}")
             }
 
             }

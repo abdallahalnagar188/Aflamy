@@ -2,7 +2,6 @@ package com.example.data.remote
 
 import com.example.domain.entity.BaseResponse
 import com.example.domain.entity.dto.movieDetails.MovieDetailsResponse
-import com.example.domain.entity.dto.newPlaying.NewPlayingResponse
 import com.example.domain.entity.dto.newPlaying.NowPlayingMovieResponse
 import com.example.domain.entity.dto.popularMovies.PopularMoviesResponse
 import com.example.domain.entity.dto.search.movies.SearchResponse

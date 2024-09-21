@@ -6,5 +6,4 @@ data class MovieModelForLocal(
     val posterPath: String?,
     val releaseDate: String?,
     val voteAverage: Double?,
-
 )
