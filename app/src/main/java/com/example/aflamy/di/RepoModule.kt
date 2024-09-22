@@ -1,6 +1,8 @@
 package com.example.aflamy.di
 
 import com.example.data.remote.Api
+import com.example.data.repoImpl.MovieActorsRepoImpl
+import com.example.data.repoImpl.MovieVideosRepoImpl
 import com.example.data.repoImpl.MoviesDetailsRepoImpl
 import com.example.data.repoImpl.NowPlayingMoviesRepoImpl
 import com.example.data.repoImpl.PopularMoviesInPagesRepoImpl
@@ -9,6 +11,8 @@ import com.example.data.repoImpl.SearchRepoImpl
 import com.example.data.repoImpl.TopRateMoviesInPagesRepoImpl
 import com.example.data.repoImpl.TopRateMoviesRepoImpl
 import com.example.data.repoImpl.UpComingMoviesRepoImpl
+import com.example.domain.repo.repoRemote.MovieActorsRepo
+import com.example.domain.repo.repoRemote.MovieVideosRepo
 import com.example.domain.repo.repoRemote.MoviesDetailsRepo
 import com.example.domain.repo.repoRemote.NewPlayingMoviesRepo
 import com.example.domain.repo.repoRemote.PopularMoviesInPagesRepo
@@ -53,6 +57,18 @@ object RepoModule {
     @Singleton
     fun provideMoviesDetailsRepo(apiService: Api): MoviesDetailsRepo {
         return MoviesDetailsRepoImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMovieVideosRepo(apiService: Api): MovieVideosRepo {
+        return MovieVideosRepoImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMovieActorsRepo(apiService: Api): MovieActorsRepo {
+        return MovieActorsRepoImpl(apiService)
     }
 
     @Provides

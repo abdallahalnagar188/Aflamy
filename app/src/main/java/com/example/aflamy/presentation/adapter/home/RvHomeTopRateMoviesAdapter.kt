@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.aflamy.R
 import com.example.aflamy.databinding.ItemMovieHomeBinding
 import javax.inject.Inject
 import com.example.domain.entity.models.MovieModel
@@ -39,6 +40,7 @@ class RvHomeTopRateMoviesAdapter @Inject constructor() :
                 val imageUrl = "https://image.tmdb.org/t/p/w500${model.posterPath}"
                 Glide.with(ivMovie.context)
                     .load(imageUrl)
+                    .error(R.drawable.iv_no_image)
                     .into(ivMovie)
 
                 root.setOnClickListener {

@@ -2,6 +2,8 @@ package com.example.data.remote
 
 import com.example.domain.entity.BaseResponse
 import com.example.domain.entity.dto.movieDetails.MovieDetailsResponse
+import com.example.domain.entity.dto.movieDetails.actors.MovieActorsResponse
+import com.example.domain.entity.dto.movieDetails.viedos.MovieViediosResponse
 import com.example.domain.entity.dto.newPlaying.NowPlayingMovieResponse
 import com.example.domain.entity.dto.popularMovies.PopularResponse
 import com.example.domain.entity.dto.search.movies.SearchResponse
@@ -44,6 +46,18 @@ interface Api {
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
     ): MovieDetailsResponse
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getMovieVideos(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): MovieViediosResponse
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getMovieActors(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): MovieActorsResponse
 
     @GET("search/movie")
     suspend fun searchMovies(

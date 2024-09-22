@@ -1,5 +1,7 @@
 package com.example.aflamy.di
 
+import com.example.domain.repo.repoRemote.MovieActorsRepo
+import com.example.domain.repo.repoRemote.MovieVideosRepo
 import com.example.domain.repo.repoRemote.MoviesDetailsRepo
 import com.example.domain.repo.repoRemote.NewPlayingMoviesRepo
 import com.example.domain.repo.repoRemote.PopularMoviesInPagesRepo
@@ -9,7 +11,9 @@ import com.example.domain.repo.repoRemote.TopRateMoviesInPagesRepo
 import com.example.domain.repo.repoRemote.TopRateMoviesRepo
 import com.example.domain.repo.repoRemote.UpComingMoviesRepo
 import com.example.domain.repo.repoRoom.WishlistRepository
+import com.example.domain.usecase.remoteUseCase.GetMovieActors
 import com.example.domain.usecase.remoteUseCase.GetMovieDetails
+import com.example.domain.usecase.remoteUseCase.GetMovieVideos
 import com.example.domain.usecase.remoteUseCase.GetNewPlayingMovies
 import com.example.domain.usecase.remoteUseCase.GetPopularMovies
 import com.example.domain.usecase.remoteUseCase.GetPopularMoviesInPages
@@ -58,6 +62,18 @@ object UseCaseModule {
     @Singleton
     fun provideMoviesDetailsUseCase(moviesDetailsRepo: MoviesDetailsRepo): GetMovieDetails {
         return GetMovieDetails(moviesDetailsRepo)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMovieVideosUseCase(movieVideosRepo: MovieVideosRepo): GetMovieVideos {
+        return GetMovieVideos(movieVideosRepo)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMovieActorsUseCase(movieActorsRepo: MovieActorsRepo): GetMovieActors {
+        return GetMovieActors(movieActorsRepo)
     }
 
     @Provides

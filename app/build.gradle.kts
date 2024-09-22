@@ -87,6 +87,8 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:4.10.0")
 
 
+    //for video
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.0.0")
     // SSP (for scalable sp)
     implementation ("com.intuit.ssp:ssp-android:1.0.6")
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")

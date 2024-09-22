@@ -14,19 +14,26 @@ import com.bumptech.glide.Glide
 import com.example.aflamy.R
 import com.example.aflamy.constance.API_Key
 import com.example.aflamy.databinding.FragmentMoviesDetailsBinding
+import com.example.aflamy.presentation.adapter.details.RvMoviesActorsAdapter
+import com.example.aflamy.presentation.adapter.details.RvMoviesVideosAdapter
 import com.example.aflamy.presentation.dialog.LoadingDialog
 import com.example.aflamy.presentation.ui.BaseFragment
 import com.example.aflamy.presentation.viewmodel.MovieDetailsViewModel
 import com.example.aflamy.presentation.viewmodel.WishlistViewModel
 import com.example.domain.entity.dto.movieDetails.MovieDetailsResponse
+import com.example.domain.entity.dto.movieDetails.actors.Cast
+import com.example.domain.entity.dto.movieDetails.actors.Crew
+import com.example.domain.entity.dto.movieDetails.viedos.Result
 import com.example.domain.entity.models.MovieModel
 import com.example.domain.state.StatusBarUtil
 import com.example.domain.state.UiState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>() {
+class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
+    RvMoviesVideosAdapter.OnItemClickListener, RvMoviesActorsAdapter.OnItemClickListener {
 
     override val bindingInflater: (LayoutInflater) -> ViewBinding
         get() = FragmentMoviesDetailsBinding::inflate
@@ -35,12 +42,21 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>() {
     private val movieViewModel: WishlistViewModel by viewModels()
     private val args: MoviesDetailsFragmentArgs by navArgs()
 
+    @Inject
+    lateinit var videoAdapter: RvMoviesVideosAdapter
+
+    @Inject
+    lateinit var actorsAdapter: RvMoviesActorsAdapter
+
     private var currentMovie: MovieDetailsResponse? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupRecyclerView()
         fetchMovieDetails()
+        fetchMovieVideos()
+        fetchMovieActors()
         setupListener()
     }
 
@@ -74,6 +90,93 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>() {
         }
     }
 
+    private fun setupRecyclerView() {
+        binding.recyclerViewVideos.adapter = videoAdapter
+        videoAdapter.setListener(this)
+        actorsAdapter.setListener(this)
+        binding.rvActors.adapter = actorsAdapter
+    }
+
+    private fun setVideoAdapter(list: List<Result>) {
+        videoAdapter.submitList(list)
+    }
+
+    private fun setActorsAdapter(list: List<Cast>) {
+        actorsAdapter.submitList(list)
+    }
+
+    private fun fetchMovieActors() {
+        val movieId = args.movieId
+        viewModel.getMovieActors(movieId, API_Key)
+
+        lifecycleScope.launch {
+            viewModel.movieActors.collect { state ->
+                when (state) {
+                    is UiState.Loading -> {
+                        // Show loading dialog
+                        LoadingDialog.showDialog()
+                    }
+
+                    is UiState.Success -> {
+                        // Dismiss loading dialog and update UI with movie details
+                        LoadingDialog.dismissDialog()
+                        setActorsAdapter(state.data?.cast ?: emptyList())
+                    }
+
+                    is UiState.Error -> {
+                        // Dismiss loading dialog and show error message
+                        LoadingDialog.dismissDialog()
+                        Toast.makeText(
+                            requireContext(),
+                            state.message?.asString(requireContext()),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    is UiState.Empty -> {}
+
+                }
+            }
+        }
+    }
+
+    private fun fetchMovieVideos() {
+        val movieId = args.movieId
+        viewModel.getMovieVideos(movieId, API_Key)
+        lifecycleScope.launch {
+            viewModel.movieVideos.collect { state ->
+                when (state) {
+                    is UiState.Loading -> {
+                        // Show loading dialog
+                        LoadingDialog.showDialog()
+                    }
+
+                    is UiState.Success -> {
+                        // Dismiss loading dialog and update UI with movie details
+                        LoadingDialog.dismissDialog()
+                        setVideoAdapter(state.data?.results ?: emptyList())
+
+                        Log.e("TAG", "fetchMovieDetails: ${state.data}")
+                    }
+
+                    is UiState.Error -> {
+                        // Dismiss loading dialog and show error message
+                        LoadingDialog.dismissDialog()
+                        Toast.makeText(
+                            requireContext(),
+                            state.message?.asString(requireContext()),
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+
+                    is UiState.Empty -> {}
+                }
+            }
+
+
+        }
+    }
     private fun fetchMovieDetails() {
         val movieId = args.movieId
         viewModel.getMovieDetails(movieId, API_Key)
@@ -162,5 +265,13 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>() {
                 }
             }
         }
+    }
+
+    override fun onToRateItemClicked(model: Result) {
+
+    }
+
+    override fun onToRateItemClicked(model: Cast) {
+
     }
 }
