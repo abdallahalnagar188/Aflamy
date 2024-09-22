@@ -1,10 +1,8 @@
 package com.example.aflamy.presentation.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -18,13 +16,17 @@ import com.example.aflamy.presentation.adapter.home.RvHomeNowPlayingMoviesAdapte
 import com.example.aflamy.presentation.adapter.home.RvHomePopularMoviesAdapter
 import com.example.aflamy.presentation.adapter.home.RvHomeTopRateMoviesAdapter
 import com.example.aflamy.presentation.adapter.home.RvHomeUpComingMoviesAdapter
-import com.example.aflamy.presentation.dialog.LoadingDialog
 import com.example.aflamy.presentation.ui.BaseFragment
 import com.example.aflamy.presentation.ui.home.viewmodel.NewPlayingMoviesViewModel
+import com.example.aflamy.presentation.ui.home.viewmodel.PopularMoviesViewModel
+import com.example.aflamy.presentation.ui.home.viewmodel.TopRateMoviesViewModel
+import com.example.aflamy.presentation.ui.home.viewmodel.UpComingMoviesViewModel
 import com.example.aflamy.presentation.viewmodel.HomeViewModel
 import com.example.domain.entity.dto.newPlaying.NowPlayingMovieResponse
+import com.example.domain.entity.dto.popularMovies.PopularResponse
+import com.example.domain.entity.dto.topRate.TopRateResponse
+import com.example.domain.entity.dto.upComing.UpComingMoviesResponse
 import com.example.domain.entity.models.MovieModel
-import com.example.domain.state.UiState
 import com.example.domain.state.applyCommonSideEffects
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -42,6 +44,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
 
     private val homeViewModel: HomeViewModel by viewModels()
     private val nowMovieViewModel: NewPlayingMoviesViewModel by viewModels()
+    private val popularViewModel: PopularMoviesViewModel by viewModels()
+    private val topRateViewModel: TopRateMoviesViewModel by viewModels()
+    private val upComingViewModel: UpComingMoviesViewModel by viewModels()
 
 
     @Inject
@@ -82,9 +87,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
     }
 
     private fun fetchMovies() {
-        homeViewModel.getPopularMovies(API_Key)
-        homeViewModel.getTopRateMovies(API_Key)
-        homeViewModel.getUpComingMovies(API_Key)
+
+        popularViewModel.getNewPlayingMovies(API_Key)
+        topRateViewModel.getTopRateMovies(API_Key)
+        upComingViewModel.getUpComingMovies(API_Key)
         nowMovieViewModel.getNewPlayingMovies(API_Key)
 
         fetchPopularMovies()
@@ -119,43 +125,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
 
     private fun fetchPopularMovies() {
         lifecycleScope.launch {
-            homeViewModel.popularMovies.collect { state ->
-                when (state) {
-                    is UiState.Loading -> {
-                        // Show loading dialog
-                        LoadingDialog.showDialog()
-                    }
-
-                    is UiState.Success -> {
-                        // Dismiss loading dialog and update RecyclerView
-                        LoadingDialog.dismissDialog()
-                        setupPopularRv(state.data ?: emptyList())
-                        Log.e("TAG", "fetchPopularMovies: ${state.data}")
-                    }
-
-                    is UiState.Error -> {
-                        // Dismiss loading dialog and show error message
-                        LoadingDialog.dismissDialog()
-                        Toast.makeText(
-                            requireContext(),
-                            state.message?.asString(requireContext()),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Log.e(
-                            "TAG",
-                            "fetchPopularMovies: ${state.message?.asString(requireContext())}"
-                        )
-                    }
-
-                    is UiState.Empty -> {
-                        LoadingDialog.dismissDialog()
-                        Toast.makeText(
-                            requireContext(),
-                            "No popular movies found",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Log.e("TAG", "fetchPopularMovies: No popular movies found")
-                    }
+            popularViewModel.popularMovies.collect { state ->
+                state.applyCommonSideEffects(this@HomeFragment) {
+                    setupPopularRv(popularToMovieModel(it.results ?: emptyList()))
                 }
             }
         }
@@ -163,44 +135,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
 
     private fun fetchTopRateMovies() {
         lifecycleScope.launch {
-            homeViewModel.topRateMovies.collect { state ->
-                when (state) {
-                    is UiState.Loading -> {
-                        // Show loading dialog
-                        LoadingDialog.showDialog()
-                    }
 
-                    is UiState.Success -> {
-                        // Dismiss loading dialog and update RecyclerView
-                        LoadingDialog.dismissDialog()
-                        setupTopRateRv(state.data ?: emptyList())
-                        Log.e("TAG", "fetchTopRateMovies: ${state.data}")
-                    }
-
-                    is UiState.Error -> {
-                        // Dismiss loading dialog and show error message
-                        LoadingDialog.dismissDialog()
-                        Toast.makeText(
-                            requireContext(),
-                            state.message?.asString(requireContext()),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Log.e(
-                            "TAG",
-                            "fetchTopRateMovies: ${state.message?.asString(requireContext())}"
-                        )
-                    }
-
-                    is UiState.Empty -> {
-                        // Dismiss loading dialog and handle empty state
-                        LoadingDialog.dismissDialog()
-                        Toast.makeText(
-                            requireContext(),
-                            "No top-rated movies found",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Log.e("TAG", "fetchTopRateMovies: No top-rated movies found")
-                    }
+            topRateViewModel.topRateMovies.collect { state ->
+                state.applyCommonSideEffects(this@HomeFragment) {
+                    setupTopRateRv(topRateToMovieModel(it.results ?: emptyList()))
                 }
             }
         }
@@ -210,54 +148,41 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
         lifecycleScope.launch {
             nowMovieViewModel.newPlayingMovies.collect { state ->
             state.applyCommonSideEffects(this@HomeFragment) {
-                setupNowPlayingRv(toMovieModel(it.results ?: emptyList()))
+                setupNowPlayingRv(nowPlayingToMovieModel(it.results ?: emptyList()))
             }
 
             }
             }
         }
 
-    private fun toMovieModel(list:List<NowPlayingMovieResponse>):List<MovieModel>{
-        return list.map { it.toMovieModel() }
-    }
-
     private fun fetchUpComingMovies() {
         lifecycleScope.launch {
-            homeViewModel.upComingMovies.collect { result ->
-                when (result) {
-                    is UiState.Loading -> {
-                        LoadingDialog.showDialog()
-                    }
-
-                    is UiState.Success -> {
-                        LoadingDialog.dismissDialog()
-                        setupUpComingRv(result.data ?: emptyList())
-
-                    }
-
-                    is UiState.Error -> {
-                        LoadingDialog.dismissDialog()
-                        Toast.makeText(
-                            requireContext(),
-                            result.message?.asString(requireContext()),
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                    }
-
-                    is UiState.Empty -> {
-                        LoadingDialog.dismissDialog()
-                        Toast.makeText(
-                            requireContext(),
-                            "No upcoming movies found",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                    }
+            upComingViewModel.upComingMovies.collect { state ->
+                state.applyCommonSideEffects(this@HomeFragment) {
+                    setupUpComingRv(upComingToMovieModel(it.results ?: emptyList()))
                 }
             }
         }
     }
+
+
+    private fun nowPlayingToMovieModel(list: List<NowPlayingMovieResponse>): List<MovieModel> {
+        return list.map { it.toMovieModel() }
+    }
+
+    private fun popularToMovieModel(list: List<PopularResponse>): List<MovieModel> {
+        return list.map { it.toMovieModel() }
+    }
+
+    private fun topRateToMovieModel(list: List<TopRateResponse>): List<MovieModel> {
+        return list.map { it.toMovieModel() }
+    }
+
+    private fun upComingToMovieModel(list: List<UpComingMoviesResponse>): List<MovieModel> {
+        return list.map { it.toMovieModel() }
+    }
+
+
 
 
     private fun setupPopularRv(list: List<MovieModel>) {

@@ -1,4 +1,4 @@
-package com.example.domain.entity.dto.upComing
+package com.example.domain.entity.dto.popularMovies
 
 
 import android.os.Parcelable
@@ -6,8 +6,9 @@ import com.example.domain.entity.models.MovieModel
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
+
 @Parcelize
-data class Result(
+data class PopularResponse(
     @SerializedName("adult")
     var adult: Boolean?,
     @SerializedName("backdrop_path")

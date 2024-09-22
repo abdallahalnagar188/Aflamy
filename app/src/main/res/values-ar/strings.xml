@@ -10,4 +10,8 @@
     <string name="error_message">Error When get Data</string>
     <string name="search_for_movies">"Search For Movies "</string>
     <string name="more_top_rate_movies">More Top Rate Movies</string>
+    <string-array name="language_options">
+        <item>English</item>
+        <item>Arabic</item>
+    </string-array>
 </resources>

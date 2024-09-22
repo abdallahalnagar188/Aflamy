@@ -11,7 +11,7 @@ data class TopRateMoviesResponse(
     @SerializedName("page")
     var page: Int?,
     @SerializedName("results")
-    var results: List<Result>?,
+    var results: List<TopRateResponse>?,
     @SerializedName("total_pages")
     var totalPages: Int?,
     @SerializedName("total_results")

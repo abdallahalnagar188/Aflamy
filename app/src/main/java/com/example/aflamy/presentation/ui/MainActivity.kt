@@ -1,5 +1,6 @@
 package com.example.aflamy.presentation.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.aflamy.R
 import com.example.aflamy.databinding.ActivityMainBinding
 import com.example.aflamy.presentation.dialog.LoadingDialog
+import com.example.domain.state.LocalUtil
 import com.example.domain.state.StatusBarUtil
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         LoadingDialog.init(this)
         StatusBarUtil.init(window)
+//        LocalUtil.init(this)
+//        LocalUtil.loadLocal(this)
         // Inflate layout using View Binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -39,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)

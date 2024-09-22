@@ -24,26 +24,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getPopularMoviesUseCase: GetPopularMovies,
-    private val getTopRateMoviesUseCase: GetTopRateMovies,
-    private val getNewPlayingMoviesUseCase: GetNewPlayingMovies,
-    private val getUpComingMoviesUseCase: GetUpComingMovies,
     private val getPopularMoviesInPagesUseCase: GetPopularMoviesInPages,
     private val getTopRateMoviesInPagesUseCase: GetTopRateMoviesInPages
 ) : ViewModel() {
 
     //---------------------------------------------------------------------------//
-    private val _popularMovies: MutableStateFlow<UiState<List<MovieModel>>> = MutableStateFlow(UiState.Empty())
-    val popularMovies: StateFlow<UiState<List<MovieModel>>> get() = _popularMovies
 
-    private val _topRateMovies: MutableStateFlow<UiState<List<MovieModel>>> = MutableStateFlow(UiState.Empty())
-    val topRateMovies: StateFlow<UiState<List<MovieModel>>> get() = _topRateMovies
-
-    private val _newPlayingMovies: MutableStateFlow<UiState<List<MovieModel>>> = MutableStateFlow(UiState.Empty())
-    val newPlayingMovies: StateFlow<UiState<List<MovieModel>>> get() = _newPlayingMovies
-
-    private val _upComingMovies: MutableStateFlow<UiState<List<MovieModel>>> = MutableStateFlow(UiState.Empty())
-    val upComingMovies: StateFlow<UiState<List<MovieModel>>> get() = _upComingMovies
+//    private val _upComingMovies: MutableStateFlow<UiState<List<MovieModel>>> = MutableStateFlow(UiState.Empty())
+//    val upComingMovies: StateFlow<UiState<List<MovieModel>>> get() = _upComingMovies
 
     suspend fun getPopularMoviesInPages(apiKey: String): Flow<PagingData<MovieModel>> {
         return getPopularMoviesInPagesUseCase(apiKey).cachedIn(viewModelScope)
@@ -53,44 +41,44 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    fun getPopularMovies(apiKey: String) {
-        viewModelScope.launch {
-            try {
-                _popularMovies.value = UiState.Loading()
+//    fun getPopularMovies(apiKey: String) {
+//        viewModelScope.launch {
+//            try {
+//                _popularMovies.value = UiState.Loading()
+//
+//                val list = getPopularMoviesUseCase(apiKey).results?.map { it.toMovieModel() }
+//
+//                if (list.isNullOrEmpty()) {
+//                    _popularMovies.value = UiState.Empty()
+//                } else {
+//                    _popularMovies.value = UiState.Success(list)
+//                }
+//
+//            } catch (e: Exception) {
+//                _popularMovies.value = UiState.Error(UiText.StringResource(R.string.error_message))
+//            }
+//        }
+//    }
 
-                val list = getPopularMoviesUseCase(apiKey).results?.map { it.toMovieModel() }
-
-                if (list.isNullOrEmpty()) {
-                    _popularMovies.value = UiState.Empty()
-                } else {
-                    _popularMovies.value = UiState.Success(list)
-                }
-
-            } catch (e: Exception) {
-                _popularMovies.value = UiState.Error(UiText.StringResource(R.string.error_message))
-            }
-        }
-    }
-
-
-    fun getTopRateMovies(apiKey: String) {
-        viewModelScope.launch {
-            try {
-                _topRateMovies.value = UiState.Loading()
-
-                val list = getTopRateMoviesUseCase(apiKey).results?.map { it.toMovieModel() }
-
-                if (list.isNullOrEmpty()) {
-                    _topRateMovies.value = UiState.Empty()
-                } else {
-                    _topRateMovies.value = UiState.Success(list)
-                }
-
-            } catch (e: Exception) {
-                _topRateMovies.value = UiState.Error(UiText.StringResource(R.string.error_message))
-            }
-        }
-    }
+//
+//    fun getTopRateMovies(apiKey: String) {
+//        viewModelScope.launch {
+//            try {
+//                _topRateMovies.value = UiState.Loading()
+//
+//                val list = getTopRateMoviesUseCase(apiKey).results?.map { it.toMovieModel() }
+//
+//                if (list.isNullOrEmpty()) {
+//                    _topRateMovies.value = UiState.Empty()
+//                } else {
+//                    _topRateMovies.value = UiState.Success(list)
+//                }
+//
+//            } catch (e: Exception) {
+//                _topRateMovies.value = UiState.Error(UiText.StringResource(R.string.error_message))
+//            }
+//        }
+//    }
 
 
 //    fun getNewPlayingMovies(apiKey: String) {
@@ -112,24 +100,24 @@ class HomeViewModel @Inject constructor(
 //        }
 //    }
 
-    fun getUpComingMovies(apiKey: String) {
-        viewModelScope.launch {
-            try {
-                _upComingMovies.value = UiState.Loading()
-
-                val list = getUpComingMoviesUseCase(apiKey).results?.map { it.toMovieModel() }
-
-                if (list.isNullOrEmpty()) {
-                    _upComingMovies.value = UiState.Empty()
-                } else {
-                    _upComingMovies.value = UiState.Success(list)
-                }
-
-            } catch (e: Exception) {
-                _upComingMovies.value = UiState.Error(UiText.StringResource(R.string.error_message))
-            }
-        }
-    }
+//    fun getUpComingMovies(apiKey: String) {
+//        viewModelScope.launch {
+//            try {
+//                _upComingMovies.value = UiState.Loading()
+//
+//                val list = getUpComingMoviesUseCase(apiKey).results?.map { it.toMovieModel() }
+//
+//                if (list.isNullOrEmpty()) {
+//                    _upComingMovies.value = UiState.Empty()
+//                } else {
+//                    _upComingMovies.value = UiState.Success(list)
+//                }
+//
+//            } catch (e: Exception) {
+//                _upComingMovies.value = UiState.Error(UiText.StringResource(R.string.error_message))
+//            }
+//        }
+//    }
 }
 
 

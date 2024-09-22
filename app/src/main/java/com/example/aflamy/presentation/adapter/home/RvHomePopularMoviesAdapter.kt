@@ -6,9 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.aflamy.databinding.ItemMovieHomeBinding
 import com.example.aflamy.databinding.ItemMovieInTopHomeBinding
-import com.example.domain.entity.dto.popularMovies.Result
 import com.example.domain.entity.models.MovieModel
 import javax.inject.Inject
 

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.aflamy.databinding.ItemMovieHomeBinding
 import javax.inject.Inject
-import com.example.domain.entity.dto.topRate.Result
 import com.example.domain.entity.models.MovieModel
 
 

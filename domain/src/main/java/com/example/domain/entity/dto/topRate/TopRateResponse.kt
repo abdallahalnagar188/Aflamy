@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Result(
+data class TopRateResponse(
     @SerializedName("adult")
     var adult: Boolean?,
     @SerializedName("backdrop_path")

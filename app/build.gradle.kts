@@ -62,6 +62,8 @@ dependencies {
 
     implementation(project(":domain"))
     implementation(project(":data"))
+    implementation ("com.akexorcist:localization:1.2.11")
+
 
     implementation ("androidx.room:room-runtime:2.5.1")
     kapt ("androidx.room:room-compiler:2.5.1")

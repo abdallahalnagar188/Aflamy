@@ -18,10 +18,6 @@ class SearchViewModel @Inject constructor(
     private val searchUseCase: GetSearchResult
 ) : ViewModel() {
 
-    private val _searchResult: MutableStateFlow<UiState<List<MovieModel>>> = MutableStateFlow(UiState.Empty())
-    val searchResult: StateFlow<UiState<List<MovieModel>>> get() = _searchResult
-
-
     suspend fun getSearchResult(apiKey: String, query: String): Flow<PagingData<MovieModel>> {
         return searchUseCase(
             query = query,

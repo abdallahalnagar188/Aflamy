@@ -3,12 +3,11 @@ package com.example.data.remote
 import com.example.domain.entity.BaseResponse
 import com.example.domain.entity.dto.movieDetails.MovieDetailsResponse
 import com.example.domain.entity.dto.newPlaying.NowPlayingMovieResponse
-import com.example.domain.entity.dto.popularMovies.PopularMoviesResponse
+import com.example.domain.entity.dto.popularMovies.PopularResponse
 import com.example.domain.entity.dto.search.movies.SearchResponse
-import com.example.domain.entity.dto.topRate.TopRateMoviesResponse
-import com.example.domain.entity.dto.upComing.UpComingResponse
+import com.example.domain.entity.dto.topRate.TopRateResponse
+import com.example.domain.entity.dto.upComing.UpComingMoviesResponse
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -16,15 +15,17 @@ interface Api {
 
     @GET("movie/popular")
     suspend fun getPopularMovies(
-        @Header("api_key") apiKey: String,
-        @Query("page") page: Int = 1
-    ): PopularMoviesResponse
+        @Query("api_key") apiKey: String,
+        @Query("page") page: Int = 1,
+//        @Query("language") language: String = "ar"
+    ): BaseResponse<List<PopularResponse>>
 
     @GET("movie/top_rated")
     suspend fun getTopRateMovies(
         @Query("api_key") apiKey: String,
-        @Query("page") page: Int = 1
-    ): TopRateMoviesResponse
+        @Query("page") page: Int = 1,
+//        @Query("language") language: String = "ar"
+    ): BaseResponse<List<TopRateResponse>>
 
     @GET("movie/now_playing")
    suspend fun getNewPlayingMovies(
@@ -36,7 +37,7 @@ interface Api {
     suspend fun getUpComingMovies(
         @Query("api_key") apiKey: String,
         @Query("page") page: Int = 1
-    ): UpComingResponse
+    ): BaseResponse<List<UpComingMoviesResponse>>
 
     @GET("movie/{movie_id}")
     suspend fun getMovieDetails(
