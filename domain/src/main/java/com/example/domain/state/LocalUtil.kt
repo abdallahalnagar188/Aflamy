@@ -15,11 +15,6 @@ object LocalUtil {
         sharedPreferences = context.getSharedPreferences("local", Context.MODE_PRIVATE)
     }
 
-    // Set the language and update the locale
-    fun setLocal(activity: Activity, language: String) {
-        sharedPreferences.edit().putString(LANGUAGE, language).apply()
-        updateResources(activity, language)  // Apply locale changes immediately
-    }
 
     // Load the saved language and apply it
     fun loadLocal(activity: Activity) {
@@ -29,7 +24,7 @@ object LocalUtil {
 
     // Get the currently saved language
     fun getLang(): String? {
-        return sharedPreferences.getString(LANGUAGE, "ar")
+        return sharedPreferences.getString(LANGUAGE, "en")
     }
 
     // Check if the current language is English
@@ -37,16 +32,20 @@ object LocalUtil {
         return sharedPreferences.getString(LANGUAGE, "ar") == "en"
     }
 
-    // Update the locale configuration
+    fun setLocal(activity: Activity, language: String) {
+        sharedPreferences.edit().putString(LANGUAGE, language).apply()
+        updateResources(activity, language)
+    }
+
     private fun updateResources(activity: Activity, language: String) {
         val locale = Locale(language)
         Locale.setDefault(locale)
         val config = Configuration(activity.resources.configuration)
         config.setLocale(locale)
         activity.baseContext.resources.updateConfiguration(config, activity.baseContext.resources.displayMetrics)
-
-        // Optionally, you can recreate the activity to apply the language change immediately
-        activity.recreate() // Forces the activity to restart and apply the new locale
+        activity.recreate() // Recreate activity to apply the new locale
     }
+
+
 }
 

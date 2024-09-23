@@ -1,19 +1,13 @@
 package com.example.aflamy.di
 
-import android.content.Context
-import androidx.room.Room
 import com.example.aflamy.constance.API_Key
 import com.example.aflamy.constance.BASE_URL
 import com.example.data.remote.Api
-//import com.example.data.dao.MovieDao
-//import com.example.data.remote.Api
-//import com.example.data.repoImpl.MovieRepositoryImpl
-//import com.example.data.room.MovieDatabase
+import com.example.domain.state.LocalUtil
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -30,18 +24,35 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttp(): OkHttpClient {
-        // Create an interceptor to add headers to every request
+    fun provideLocalUtil(): LocalUtil {
+        return LocalUtil
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttp(localUtil: LocalUtil): OkHttpClient {
         val headerInterceptor = Interceptor { chain ->
             val originalRequest: Request = chain.request()
+            val originalUrl = originalRequest.url
+
+            // Get the current language from LocalUtil (default to "en")
+            val language = localUtil.getLang() ?: "en"
+
+            // Update the URL to add the "language" query parameter
+            val updatedUrl = originalUrl.newBuilder()
+                .addQueryParameter("language", language)
+                .build()
+
+            // Create a new request with the updated URL
             val requestWithHeaders: Request = originalRequest.newBuilder()
+                .url(updatedUrl)
                 .addHeader("accept", "application/json")
                 .addHeader("Authorization", "Bearer $API_Key")
                 .build()
+
             chain.proceed(requestWithHeaders)
         }
 
-        // Optionally add logging interceptor for debugging purposes
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
@@ -49,8 +60,8 @@ object NetworkModule {
         return OkHttpClient.Builder()
             .connectTimeout(20, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
-            .addInterceptor(headerInterceptor) // Add header interceptor
-            .addInterceptor(loggingInterceptor) // Add logging interceptor (optional)
+            .addInterceptor(headerInterceptor)
+            .addInterceptor(loggingInterceptor)
             .build()
     }
 
@@ -76,3 +87,6 @@ object NetworkModule {
         return Gson()
     }
 }
+
+
+

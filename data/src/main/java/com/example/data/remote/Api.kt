@@ -26,7 +26,6 @@ interface Api {
     suspend fun getTopRateMovies(
         @Query("api_key") apiKey: String,
         @Query("page") page: Int = 1,
-//        @Query("language") language: String = "ar"
     ): BaseResponse<List<TopRateResponse>>
 
     @GET("movie/now_playing")

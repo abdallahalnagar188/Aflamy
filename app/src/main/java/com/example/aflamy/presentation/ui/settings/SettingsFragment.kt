@@ -22,35 +22,44 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        // Set up languages array
-//        val languages = resources.getStringArray(R.array.language_options)
-//        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, languages)
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        binding.languageSpinner.adapter = adapter
-//
-//        // Set the spinner to the currently selected language
-//        val currentLanguage = LocalUtil.getLang() ?: "en" // Default to English if no language set
-//        binding.languageSpinner.setSelection(if (currentLanguage == "ar") 1 else 0)
-//
-//        // Handle language selection
-//        binding.languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-//                val selectedLanguage = if (position == 1) "ar" else "en"
-//
-//                // Only change language if it's different from the current one
-//                if (selectedLanguage != currentLanguage) {
-//                    // Safely cast to MainActivity and change the language
-//                    (activity as? MainActivity)?.let { mainActivity ->
-//                        LocalUtil.setLocal(mainActivity, selectedLanguage)
-//                        mainActivity.setLanguage(selectedLanguage) // Restart the activity to apply language change
-//                    }
-//                }
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>) {
-//                // No action needed when nothing is selected
-//            }
-//        }
+        setupLanguageSpinner()
+    }
+
+    private fun setupLanguageSpinner() {
+        // Get the languages array
+        val languages = resources.getStringArray(R.array.language_options)
+
+        // Initialize ArrayAdapter for the spinner
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, languages)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.languageSpinner.adapter = adapter
+
+        // Retrieve the current language
+        val currentLanguage = LocalUtil.getLang() ?: "en"  // Default to "en" if no language is set
+
+        // Set the spinner to the currently selected language
+        binding.languageSpinner.setSelection(if (currentLanguage == "ar") 1 else 0)
+
+        // Handle spinner item selection
+        binding.languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedLanguage = if (position == 1) "ar" else "en"
+
+                // Only proceed if the selected language is different from the current one
+                if (selectedLanguage != currentLanguage) {
+                    // Update the language using LocalUtil
+                    LocalUtil.setLocal(requireActivity(), selectedLanguage)
+
+                    // Recreate the activity to apply the language change
+                    (activity as? MainActivity)?.recreate()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Do nothing when no selection is made
+            }
+        }
     }
 }
+
 

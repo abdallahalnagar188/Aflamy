@@ -10,10 +10,10 @@ import java.util.Locale
 @HiltAndroidApp
 class AflamyApp : Application() {
 
-//    override fun onCreate() {
-//        super.onCreate()
-//        LocalUtil.init(this) // Initialize LocalUtil first
-//    }
+    override fun onCreate() {
+        super.onCreate()
+        LocalUtil.init(this) // Initialize LocalUtil first
+    }
 
 //    override fun getDefaultLanguage(context: Context): Locale {
 //        // Get the saved language after LocalUtil has been initialized

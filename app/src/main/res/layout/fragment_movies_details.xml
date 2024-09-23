@@ -171,7 +171,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_6sdp"
             android:fontFamily="@font/poppins_medium"
-            android:text="Movie Types"
+            android:text="@string/movie_types"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
@@ -226,9 +226,9 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_10sdp"
             android:fontFamily="@font/poppins_medium"
-            android:text="About Movie"
+            android:text="@string/about_movie"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movie_types" />
@@ -249,18 +249,44 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvAboutMovie" />
 
+        <TextView
+            android:id="@+id/tv_videos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/tv_videos"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewVideos"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginTop="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDescription"
+            app:layout_constraintTop_toBottomOf="@+id/tv_videos"
             tools:listitem="@layout/item_video" />
 
+        <TextView
+            android:id="@+id/tv_actors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins_medium"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="@string/tv_actors"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewVideos"
+            />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_actors"
             android:layout_width="0dp"
@@ -271,7 +297,7 @@
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/_16sdp"
             tools:listitem="@layout/item_actors"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerViewVideos" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_actors" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
