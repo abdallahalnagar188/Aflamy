@@ -7,6 +7,7 @@ import com.example.domain.repo.repoRemote.NewPlayingMoviesRepo
 import com.example.domain.repo.repoRemote.PopularMoviesInPagesRepo
 import com.example.domain.repo.repoRemote.PopularMoviesRepo
 import com.example.domain.repo.repoRemote.SearchRepo
+import com.example.domain.repo.repoRemote.SimilarMoviesRepo
 import com.example.domain.repo.repoRemote.TopRateMoviesInPagesRepo
 import com.example.domain.repo.repoRemote.TopRateMoviesRepo
 import com.example.domain.repo.repoRemote.UpComingMoviesRepo
@@ -18,6 +19,7 @@ import com.example.domain.usecase.remoteUseCase.GetNewPlayingMovies
 import com.example.domain.usecase.remoteUseCase.GetPopularMovies
 import com.example.domain.usecase.remoteUseCase.GetPopularMoviesInPages
 import com.example.domain.usecase.remoteUseCase.GetSearchResult
+import com.example.domain.usecase.remoteUseCase.GetSimilarMovies
 import com.example.domain.usecase.remoteUseCase.GetTopRateMovies
 import com.example.domain.usecase.remoteUseCase.GetTopRateMoviesInPages
 import com.example.domain.usecase.remoteUseCase.GetUpComingMovies
@@ -74,6 +76,12 @@ object UseCaseModule {
     @Singleton
     fun provideMovieActorsUseCase(movieActorsRepo: MovieActorsRepo): GetMovieActors {
         return GetMovieActors(movieActorsRepo)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSimilarMoviesUseCase(similarMoviesRepo: SimilarMoviesRepo): GetSimilarMovies {
+        return GetSimilarMovies(similarMoviesRepo)
     }
 
     @Provides

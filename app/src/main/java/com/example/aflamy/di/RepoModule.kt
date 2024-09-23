@@ -8,6 +8,7 @@ import com.example.data.repoImpl.NowPlayingMoviesRepoImpl
 import com.example.data.repoImpl.PopularMoviesInPagesRepoImpl
 import com.example.data.repoImpl.PopularMoviesRepoImpl
 import com.example.data.repoImpl.SearchRepoImpl
+import com.example.data.repoImpl.SimilarRepoImpl
 import com.example.data.repoImpl.TopRateMoviesInPagesRepoImpl
 import com.example.data.repoImpl.TopRateMoviesRepoImpl
 import com.example.data.repoImpl.UpComingMoviesRepoImpl
@@ -18,6 +19,7 @@ import com.example.domain.repo.repoRemote.NewPlayingMoviesRepo
 import com.example.domain.repo.repoRemote.PopularMoviesInPagesRepo
 import com.example.domain.repo.repoRemote.PopularMoviesRepo
 import com.example.domain.repo.repoRemote.SearchRepo
+import com.example.domain.repo.repoRemote.SimilarMoviesRepo
 import com.example.domain.repo.repoRemote.TopRateMoviesInPagesRepo
 import com.example.domain.repo.repoRemote.TopRateMoviesRepo
 import com.example.domain.repo.repoRemote.UpComingMoviesRepo
@@ -69,6 +71,12 @@ object RepoModule {
     @Singleton
     fun provideMovieActorsRepo(apiService: Api): MovieActorsRepo {
         return MovieActorsRepoImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSimilarMoviesRepo(apiService: Api): SimilarMoviesRepo {
+        return SimilarRepoImpl(apiService)
     }
 
     @Provides

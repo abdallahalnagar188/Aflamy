@@ -13,6 +13,7 @@
     <string name="about_movie">About Movie</string>
     <string name="tv_videos">Videos</string>
     <string name="tv_actors">Actors</string>
+    <string name="related_movies">Related Movies</string>
 
     <string-array name="language_options">
         <item>English</item>

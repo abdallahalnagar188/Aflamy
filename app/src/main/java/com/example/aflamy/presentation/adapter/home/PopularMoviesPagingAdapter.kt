@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.aflamy.databinding.ItemSeeMoreMoviesBinding
+import com.example.aflamy.genrel.formatDate
 import com.example.domain.entity.models.MovieModel
 import javax.inject.Inject
 
@@ -46,7 +47,7 @@ class PopularMoviesPagingAdapter @Inject constructor() :
             binding.apply {
                 movieRating.text = String.format("%.1f", movie?.voteAverage ?: 0.0)
                 movieTitle.text = movie.title
-                movieYear.text = movie.releaseDate
+                movieYear.text = formatDate(movie.releaseDate?:"")
 //                movieGenre.text = movie.overview
                 movieDuration.text = movie.originalLanguage.toString()
                 Glide.with(moviePoster.context)

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.aflamy.databinding.ItemMovieHomeBinding
+import com.example.aflamy.genrel.formatDate
 import javax.inject.Inject
 import com.example.domain.entity.models.MovieModel
 
@@ -33,7 +34,7 @@ class RvHomeNowPlayingMoviesAdapter @Inject constructor() :
 
             binding.apply {
                 tvMovieName.text = model.title
-                tvDate.text = model.releaseDate
+                tvDate.text = formatDate(model.releaseDate?:"")
                 tvRate.text = String.format("%.1f", model?.voteAverage ?: 0.0)
 
                 val imageUrl = "https://image.tmdb.org/t/p/w500${model.posterPath}"

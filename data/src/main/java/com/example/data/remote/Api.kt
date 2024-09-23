@@ -3,6 +3,7 @@ package com.example.data.remote
 import com.example.domain.entity.BaseResponse
 import com.example.domain.entity.dto.movieDetails.MovieDetailsResponse
 import com.example.domain.entity.dto.movieDetails.actors.MovieActorsResponse
+import com.example.domain.entity.dto.movieDetails.similer.SimilarMovies
 import com.example.domain.entity.dto.movieDetails.viedos.MovieViediosResponse
 import com.example.domain.entity.dto.newPlaying.NowPlayingMovieResponse
 import com.example.domain.entity.dto.popularMovies.PopularResponse
@@ -19,7 +20,6 @@ interface Api {
     suspend fun getPopularMovies(
         @Query("api_key") apiKey: String,
         @Query("page") page: Int = 1,
-//        @Query("language") language: String = "ar"
     ): BaseResponse<List<PopularResponse>>
 
     @GET("movie/top_rated")
@@ -49,7 +49,8 @@ interface Api {
     @GET("movie/{movie_id}/videos")
     suspend fun getMovieVideos(
         @Path("movie_id") movieId: Int,
-        @Query("api_key") apiKey: String
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String = "en-US"
     ): MovieViediosResponse
 
     @GET("movie/{movie_id}/credits")
@@ -57,6 +58,13 @@ interface Api {
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String
     ): MovieActorsResponse
+
+    @GET("movie/{movie_id}/similar")
+    suspend fun getSimilarMovies(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("page") page: Int = 1
+    ): BaseResponse<List<SimilarMovies>>
 
     @GET("search/movie")
     suspend fun searchMovies(

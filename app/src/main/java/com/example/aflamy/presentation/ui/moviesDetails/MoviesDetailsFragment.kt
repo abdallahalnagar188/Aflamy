@@ -14,32 +14,36 @@ import com.bumptech.glide.Glide
 import com.example.aflamy.R
 import com.example.aflamy.constance.API_Key
 import com.example.aflamy.databinding.FragmentMoviesDetailsBinding
+import com.example.aflamy.genrel.navOptionsAnimation
 import com.example.aflamy.presentation.adapter.details.RvMoviesActorsAdapter
 import com.example.aflamy.presentation.adapter.details.RvMoviesVideosAdapter
+import com.example.aflamy.presentation.adapter.details.RvSimilarMoviesAdapter
 import com.example.aflamy.presentation.dialog.LoadingDialog
 import com.example.aflamy.presentation.ui.BaseFragment
 import com.example.aflamy.presentation.viewmodel.MovieDetailsViewModel
 import com.example.aflamy.presentation.viewmodel.WishlistViewModel
 import com.example.domain.entity.dto.movieDetails.MovieDetailsResponse
 import com.example.domain.entity.dto.movieDetails.actors.Cast
-import com.example.domain.entity.dto.movieDetails.actors.Crew
 import com.example.domain.entity.dto.movieDetails.viedos.Result
 import com.example.domain.entity.models.MovieModel
 import com.example.domain.state.StatusBarUtil
 import com.example.domain.state.UiState
+import com.example.domain.state.applyCommonSideEffects
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
-    RvMoviesVideosAdapter.OnItemClickListener, RvMoviesActorsAdapter.OnItemClickListener {
+    RvMoviesVideosAdapter.OnItemClickListener, RvMoviesActorsAdapter.OnItemClickListener,
+    RvSimilarMoviesAdapter.OnItemClickListener {
 
     override val bindingInflater: (LayoutInflater) -> ViewBinding
         get() = FragmentMoviesDetailsBinding::inflate
 
     private val viewModel: MovieDetailsViewModel by viewModels()
     private val movieViewModel: WishlistViewModel by viewModels()
+    private val similarViewModel: SimilarMoviesViewModel by viewModels()
     private val args: MoviesDetailsFragmentArgs by navArgs()
 
     @Inject
@@ -47,6 +51,9 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
 
     @Inject
     lateinit var actorsAdapter: RvMoviesActorsAdapter
+
+    @Inject
+    lateinit var similarAdapter: RvSimilarMoviesAdapter
 
     private var currentMovie: MovieDetailsResponse? = null
 
@@ -57,6 +64,7 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
         fetchMovieDetails()
         fetchMovieVideos()
         fetchMovieActors()
+        fetchSimilarMovies()
         setupListener()
     }
 
@@ -78,6 +86,10 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
                 movieType1.text = firstGenre?.name ?: ""
                 movieType2.text = secondGenre?.name ?: ""
                 movieType3.text = thirdGenre?.name ?: ""
+            } else {
+                movieType1.visibility = View.GONE
+                movieType2.visibility = View.GONE
+                movieType3.visibility = View.GONE
             }
 
             Glide.with(requireContext())
@@ -92,9 +104,12 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
 
     private fun setupRecyclerView() {
         binding.recyclerViewVideos.adapter = videoAdapter
+        binding.rvActors.adapter = actorsAdapter
+        binding.rvSimilarMovies.adapter = similarAdapter
+        similarAdapter.setListener(this)
         videoAdapter.setListener(this)
         actorsAdapter.setListener(this)
-        binding.rvActors.adapter = actorsAdapter
+
     }
 
     private fun setVideoAdapter(list: List<Result>) {
@@ -105,6 +120,22 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
         actorsAdapter.submitList(list)
     }
 
+    private fun setSimilarAdapter(list: List<MovieModel>) {
+        similarAdapter.submitList(list)
+    }
+
+    private fun fetchSimilarMovies() {
+        val movieId = args.movieId
+        similarViewModel.getUpComingMovies(movieId, API_Key)
+
+        lifecycleScope.launch {
+            similarViewModel.similarMovies.collect { state ->
+                state.applyCommonSideEffects(this@MoviesDetailsFragment) { result ->
+                    setSimilarAdapter(result.results?.map { it.toMovieModel() } ?: emptyList())
+                }
+            }
+        }
+    }
     private fun fetchMovieActors() {
         val movieId = args.movieId
         viewModel.getMovieActors(movieId, API_Key)
@@ -272,6 +303,15 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
     }
 
     override fun onToRateItemClicked(model: Cast) {
+
+    }
+
+    override fun onItemClicked(model: MovieModel) {
+
+        findNavController().navigate(R.id.moviesDetailsFragment, Bundle().apply {
+            model.id?.let { putInt("movieId", it) }
+        }, navOptionsAnimation()
+        )
 
     }
 }

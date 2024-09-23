@@ -2,6 +2,8 @@ package com.example.aflamy.genrel
 
 import androidx.navigation.NavOptions
 import com.example.aflamy.R
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 fun navOptionsAnimation(): NavOptions {
@@ -31,6 +33,13 @@ fun navOptionsFromTopAnimation(): NavOptions {
         .setPopExitAnim(R.anim.to_top)
         .build()
 
+}
+
+fun formatDate(dateString: String): String {
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    val outputFormat = SimpleDateFormat("yyyy", Locale.getDefault())
+    val date = inputFormat.parse(dateString)
+    return outputFormat.format(date)
 }
 
 // -------------------------------------------------------------- //

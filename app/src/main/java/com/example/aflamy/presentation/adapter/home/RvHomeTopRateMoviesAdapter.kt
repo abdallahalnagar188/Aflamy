@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.aflamy.R
 import com.example.aflamy.databinding.ItemMovieHomeBinding
+import com.example.aflamy.genrel.formatDate
 import javax.inject.Inject
 import com.example.domain.entity.models.MovieModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 class RvHomeTopRateMoviesAdapter @Inject constructor() :
@@ -34,8 +37,16 @@ class RvHomeTopRateMoviesAdapter @Inject constructor() :
 
             binding.apply {
                 tvMovieName.text = model.title
-                tvDate.text = model.releaseDate
-                tvRate.text = String.format("%.1f", model?.voteAverage ?: 0.0)
+
+//                // Format the release date to show only the year
+//                val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+//                val outputFormat = SimpleDateFormat("yyyy", Locale.getDefault())
+//
+//                val date = inputFormat.parse(model.releaseDate?:"")
+//                val formattedDate = if (date != null) outputFormat.format(date) else model.releaseDate
+                tvDate.text = formatDate(model.releaseDate?:"")
+
+                tvRate.text = String.format("%.1f", model.voteAverage ?: 0.0)
 
                 val imageUrl = "https://image.tmdb.org/t/p/w500${model.posterPath}"
                 Glide.with(ivMovie.context)
@@ -46,9 +57,9 @@ class RvHomeTopRateMoviesAdapter @Inject constructor() :
                 root.setOnClickListener {
                     listener.onToRateItemClicked(model)
                 }
-
             }
         }
+
     }
 
 

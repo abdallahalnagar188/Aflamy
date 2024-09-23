@@ -14,6 +14,7 @@
     <string name="about_movie">تفاصيل الفيلم</string>
     <string name="tv_videos">الفيديوهات</string>
     <string name="tv_actors">الممثلين</string>
+    <string name="related_movies">افلام مشابهه</string>
     <string-array name="language_options">
         <item>الانجليزيه</item>
         <item>العربيه</item>
