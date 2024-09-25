@@ -1,19 +1,15 @@
-package com.example.domain.entity.dto.topRate
+package com.example.domain.entity.dto.movieDetails.similer
 
-
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
 
-@Parcelize
-data class TopRateMoviesResponse(
+data class SimilarMoviesResponse(
     @SerializedName("page")
     var page: Int?,
     @SerializedName("results")
-    var results: List<TopRateMoviesDto>?,
+    var results: List<SimilarMoviesDto?>?,
     @SerializedName("total_pages")
     var totalPages: Int?,
     @SerializedName("total_results")
     var totalResults: Int?
-):Parcelable
+)

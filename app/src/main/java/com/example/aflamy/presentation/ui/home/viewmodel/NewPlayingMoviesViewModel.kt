@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.entity.BaseResponse
-import com.example.domain.entity.dto.newPlaying.NowPlayingMovieResponse
+import com.example.domain.entity.dto.newPlaying.NowPlayingMoviesDto
 import com.example.domain.state.DataState
 import com.example.domain.usecase.remoteUseCase.GetNewPlayingMovies
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ class NewPlayingMoviesViewModel @Inject constructor(
     private val getNewPlayingMoviesUseCase: GetNewPlayingMovies,
 ): ViewModel() {
 
-    private val _newPlayingMovies: MutableStateFlow<DataState<BaseResponse<List<NowPlayingMovieResponse>>>> = MutableStateFlow(DataState.Idle)
+    private val _newPlayingMovies: MutableStateFlow<DataState<BaseResponse<List<NowPlayingMoviesDto>>>> = MutableStateFlow(DataState.Idle)
     val newPlayingMovies = _newPlayingMovies.asStateFlow()
 
     fun getNewPlayingMovies(apiKey: String) {

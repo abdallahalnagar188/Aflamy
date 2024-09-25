@@ -53,6 +53,16 @@ dependencies {
     kapt( "androidx.room:room-compiler:$room_version")
     implementation ("androidx.paging:paging-runtime:3.2.0")
 
+
+    //moshi
+    implementation ("com.squareup.moshi:moshi:1.14.0")
+
+    // Moshi adapter for Kotlin support
+    implementation ("com.squareup.moshi:moshi-kotlin:1.14.0")
+
+    // (Optional) If using Retrofit, you can add this to work with Moshi:
+    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
+
     // For Kotlin coroutines support
     implementation ("androidx.paging:paging-common-ktx:3.2.0")
     //retrofit

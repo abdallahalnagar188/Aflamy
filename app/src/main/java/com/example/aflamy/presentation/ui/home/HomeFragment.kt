@@ -11,7 +11,6 @@ import androidx.viewbinding.ViewBinding
 import com.example.aflamy.R
 import com.example.aflamy.constance.API_Key
 import com.example.aflamy.databinding.FragmentHomeBinding
-import com.example.aflamy.genrel.navOptionsAnimation
 import com.example.aflamy.presentation.adapter.home.RvHomeNowPlayingMoviesAdapter
 import com.example.aflamy.presentation.adapter.home.RvHomePopularMoviesAdapter
 import com.example.aflamy.presentation.adapter.home.RvHomeTopRateMoviesAdapter
@@ -22,10 +21,6 @@ import com.example.aflamy.presentation.ui.home.viewmodel.PopularMoviesViewModel
 import com.example.aflamy.presentation.ui.home.viewmodel.TopRateMoviesViewModel
 import com.example.aflamy.presentation.ui.home.viewmodel.UpComingMoviesViewModel
 import com.example.aflamy.presentation.viewmodel.HomeViewModel
-import com.example.domain.entity.dto.newPlaying.NowPlayingMovieResponse
-import com.example.domain.entity.dto.popularMovies.PopularResponse
-import com.example.domain.entity.dto.topRate.TopRateResponse
-import com.example.domain.entity.dto.upComing.UpComingMoviesResponse
 import com.example.domain.entity.models.MovieModel
 import com.example.domain.state.applyCommonSideEffects
 import dagger.hilt.android.AndroidEntryPoint
@@ -88,11 +83,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
 
     private fun fetchMovies() {
 
-        popularViewModel.getNewPlayingMovies(API_Key)
-        topRateViewModel.getTopRateMovies(API_Key)
-        upComingViewModel.getUpComingMovies(API_Key)
-        nowMovieViewModel.getNewPlayingMovies(API_Key)
-
         fetchPopularMovies()
         fetchTopRateMovies()
         fetchNowPlayingMovies()
@@ -103,10 +93,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
 
     private fun setupListeners() {
         binding.tvSeeMorePopularMovies.setOnClickListener {
-            findNavController().navigate(R.id.seeMorePopularMoviesFragment, null, navOptionsAnimation())
+            findNavController().navigate(R.id.seeMorePopularMoviesFragment)
         }
         binding.homeTopRate.tvTopRatSeeMore.setOnClickListener {
-            findNavController().navigate(R.id.seeMoreTopRateMoviesFragment,null, navOptionsAnimation())
+            findNavController().navigate(R.id.seeMoreTopRateMoviesFragment)
         }
         binding.homeTopBar.ivSearch.setOnClickListener {
 
@@ -124,31 +114,34 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
     }
 
     private fun fetchPopularMovies() {
+        popularViewModel.getNewPlayingMovies(API_Key)
         lifecycleScope.launch {
             popularViewModel.popularMovies.collect { state ->
-                state.applyCommonSideEffects(this@HomeFragment) {
-                    setupPopularRv(popularToMovieModel(it.results ?: emptyList()))
+                state.applyCommonSideEffects(this@HomeFragment) { data ->
+                    setupPopularRv(data.results?.map { it.toMovieModel() } ?: emptyList())
                 }
             }
         }
     }
 
     private fun fetchTopRateMovies() {
+        topRateViewModel.getTopRateMovies(API_Key)
         lifecycleScope.launch {
 
             topRateViewModel.topRateMovies.collect { state ->
-                state.applyCommonSideEffects(this@HomeFragment) {
-                    setupTopRateRv(topRateToMovieModel(it.results ?: emptyList()))
+                state.applyCommonSideEffects(this@HomeFragment) { data ->
+                    setupTopRateRv(data.results?.map { it.toMovieModel() } ?: emptyList())
                 }
             }
         }
     }
 
     private fun fetchNowPlayingMovies() {
+        nowMovieViewModel.getNewPlayingMovies(API_Key)
         lifecycleScope.launch {
             nowMovieViewModel.newPlayingMovies.collect { state ->
-            state.applyCommonSideEffects(this@HomeFragment) {
-                setupNowPlayingRv(nowPlayingToMovieModel(it.results ?: emptyList()))
+                state.applyCommonSideEffects(this@HomeFragment) { data ->
+                    setupNowPlayingRv(data.results?.map { it.toMovieModel() } ?: emptyList())
             }
 
             }
@@ -156,33 +149,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
         }
 
     private fun fetchUpComingMovies() {
+        upComingViewModel.getUpComingMovies(API_Key)
         lifecycleScope.launch {
             upComingViewModel.upComingMovies.collect { state ->
-                state.applyCommonSideEffects(this@HomeFragment) {
-                    setupUpComingRv(upComingToMovieModel(it.results ?: emptyList()))
+                state.applyCommonSideEffects(this@HomeFragment) { data ->
+                    setupUpComingRv(data.results?.map { it.toMovieModel() } ?: emptyList())
                 }
             }
         }
     }
-
-
-    private fun nowPlayingToMovieModel(list: List<NowPlayingMovieResponse>): List<MovieModel> {
-        return list.map { it.toMovieModel() }
-    }
-
-    private fun popularToMovieModel(list: List<PopularResponse>): List<MovieModel> {
-        return list.map { it.toMovieModel() }
-    }
-
-    private fun topRateToMovieModel(list: List<TopRateResponse>): List<MovieModel> {
-        return list.map { it.toMovieModel() }
-    }
-
-    private fun upComingToMovieModel(list: List<UpComingMoviesResponse>): List<MovieModel> {
-        return list.map { it.toMovieModel() }
-    }
-
-
 
 
     private fun setupPopularRv(list: List<MovieModel>) {
@@ -207,33 +182,41 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
 
     override fun onPopularItemClicked(model: MovieModel) {
 
-        findNavController().navigate(R.id.moviesDetailsFragment, Bundle().apply {
-            model.id?.let { putInt("movieId", it) }
-        }, navOptionsAnimation()
+        findNavController().navigate(
+            R.id.moviesDetailsFragment,
+            Bundle().apply {
+                model.id?.let { putInt("movieId", it) }
+            },
         )
     }
 
     override fun onToRateItemClicked(model: MovieModel) {
 
-        findNavController().navigate(R.id.moviesDetailsFragment, Bundle().apply {
-            model.id?.let { putInt("movieId", it) }
-        }, navOptionsAnimation()
+        findNavController().navigate(
+            R.id.moviesDetailsFragment,
+            Bundle().apply {
+                model.id?.let { putInt("movieId", it) }
+            },
         )
     }
 
     override fun onNowPlayingItemClicked(model: MovieModel) {
 
-        findNavController().navigate(R.id.moviesDetailsFragment, Bundle().apply {
-            model.id?.let { putInt("movieId", it) }
-        }, navOptionsAnimation()
+        findNavController().navigate(
+            R.id.moviesDetailsFragment,
+            Bundle().apply {
+                model.id?.let { putInt("movieId", it) }
+            },
         )
     }
 
     override fun onUpComingItemClicked(model: MovieModel) {
 
-        findNavController().navigate(R.id.moviesDetailsFragment, Bundle().apply {
-            model.id?.let { putInt("movieId", it) }
-        }, navOptionsAnimation()
+        findNavController().navigate(
+            R.id.moviesDetailsFragment,
+            Bundle().apply {
+                model.id?.let { putInt("movieId", it) }
+            },
         )
     }
 }

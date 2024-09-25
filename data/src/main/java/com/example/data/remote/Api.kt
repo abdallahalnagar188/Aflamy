@@ -3,13 +3,13 @@ package com.example.data.remote
 import com.example.domain.entity.BaseResponse
 import com.example.domain.entity.dto.movieDetails.MovieDetailsResponse
 import com.example.domain.entity.dto.movieDetails.actors.MovieActorsResponse
-import com.example.domain.entity.dto.movieDetails.similer.SimilarMovies
+import com.example.domain.entity.dto.movieDetails.similer.SimilarMoviesDto
 import com.example.domain.entity.dto.movieDetails.viedos.MovieViediosResponse
-import com.example.domain.entity.dto.newPlaying.NowPlayingMovieResponse
+import com.example.domain.entity.dto.newPlaying.NowPlayingMoviesDto
 import com.example.domain.entity.dto.popularMovies.PopularResponse
 import com.example.domain.entity.dto.search.movies.SearchResponse
-import com.example.domain.entity.dto.topRate.TopRateResponse
-import com.example.domain.entity.dto.upComing.UpComingMoviesResponse
+import com.example.domain.entity.dto.topRate.TopRateMoviesDto
+import com.example.domain.entity.dto.upComing.UpComingMoviesDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -26,19 +26,19 @@ interface Api {
     suspend fun getTopRateMovies(
         @Query("api_key") apiKey: String,
         @Query("page") page: Int = 1,
-    ): BaseResponse<List<TopRateResponse>>
+    ): BaseResponse<List<TopRateMoviesDto>>
 
     @GET("movie/now_playing")
    suspend fun getNewPlayingMovies(
         @Query("api_key") apiKey: String,
         @Query("page") page: Int = 2
-    ): BaseResponse<List<NowPlayingMovieResponse>>
+    ): BaseResponse<List<NowPlayingMoviesDto>>
 
     @GET("movie/upcoming")
     suspend fun getUpComingMovies(
         @Query("api_key") apiKey: String,
         @Query("page") page: Int = 1
-    ): BaseResponse<List<UpComingMoviesResponse>>
+    ): BaseResponse<List<UpComingMoviesDto>>
 
     @GET("movie/{movie_id}")
     suspend fun getMovieDetails(
@@ -64,7 +64,7 @@ interface Api {
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String,
         @Query("page") page: Int = 1
-    ): BaseResponse<List<SimilarMovies>>
+    ): BaseResponse<List<SimilarMoviesDto>>
 
     @GET("search/movie")
     suspend fun searchMovies(

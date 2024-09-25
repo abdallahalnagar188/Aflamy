@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.aflamy.R
 import com.example.aflamy.databinding.ItemActorsBinding
 import com.example.aflamy.databinding.ItemMovieHomeBinding
+import com.example.aflamy.databinding.ItemMovieTypeBinding
 import com.example.aflamy.databinding.ItemVideoBinding
 import com.example.domain.entity.dto.movieDetails.actors.Cast
 import com.example.domain.entity.dto.movieDetails.actors.Crew
@@ -20,36 +21,26 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
 
 
-class RvMoviesActorsAdapter @Inject constructor() :
-    ListAdapter<Cast, RvMoviesActorsAdapter.ProductViewHolder>(PRODUCT_COMPARATOR) {
+class RvMovieTypesAdapter @Inject constructor() :
+    ListAdapter<String, RvMovieTypesAdapter.ProductViewHolder>(PRODUCT_COMPARATOR) {
     //private lateinit var listener: OnItemClickListener
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ProductViewHolder(
-        ItemActorsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        ItemMovieTypeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         getItem(position).let { holder.bind(it) }
     }
 
-    inner class ProductViewHolder(private val binding: ItemActorsBinding) :
+    inner class ProductViewHolder(private val binding: ItemMovieTypeBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
 
-        fun bind(model: Cast) {
+        fun bind(text: String) {
             binding.apply {
-                tvActorName.text = model.name
-
-                Glide.with(root.context)
-                    .load("https://image.tmdb.org/t/p/w500" + model.profilePath)
-                    .placeholder(R.drawable.iv_no_image)
-                    .error(R.drawable.iv_no_image)
-                    .into(ivActorImage)
-                // Handle click event
-//                root.setOnClickListener {
-//                    listener.onToRateItemClicked(model)
-//                }
+                movieTypeText.text = text
             }
         }
     }
@@ -66,15 +57,15 @@ class RvMoviesActorsAdapter @Inject constructor() :
 
     //check difference
     companion object {
-        private val PRODUCT_COMPARATOR = object : DiffUtil.ItemCallback<Cast>() {
+        private val PRODUCT_COMPARATOR = object : DiffUtil.ItemCallback<String>() {
             override fun areItemsTheSame(
-                oldItem: Cast,
-                newItem: Cast
+                oldItem: String,
+                newItem: String
             ) = oldItem == newItem
 
             override fun areContentsTheSame(
-                oldItem: Cast,
-                newItem: Cast
+                oldItem: String,
+                newItem: String
             ) = oldItem == newItem
         }
     }

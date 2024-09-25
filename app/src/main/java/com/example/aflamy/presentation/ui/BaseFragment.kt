@@ -42,8 +42,8 @@ abstract class BaseFragment<out T : ViewBinding> : Fragment(),NetworkExtensionsA
     override fun onLoad(showLoading: Boolean) {
         super.onLoad(showLoading)
         LoadingDialog.showDialog()
-        if (showLoading) LoadingDialog.showDialog()
-        else LoadingDialog.dismissDialog()
+        if (showLoading){ LoadingDialog.showDialog()}
+        else {LoadingDialog.dismissDialog()}
     }
 
 }

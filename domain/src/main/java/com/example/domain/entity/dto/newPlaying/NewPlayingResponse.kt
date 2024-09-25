@@ -12,7 +12,7 @@ data class NewPlayingResponse(
     @SerializedName("page")
     val page: Int?,
     @SerializedName("results")
-    val results: List<NowPlayingMovieResponse>?,
+    val results: List<NowPlayingMoviesDto>?,
     @SerializedName("total_pages")
     val totalPages: Int?,
     @SerializedName("total_results")

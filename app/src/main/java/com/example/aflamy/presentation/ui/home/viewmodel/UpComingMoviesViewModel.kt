@@ -4,12 +4,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.entity.BaseResponse
-import com.example.domain.entity.dto.popularMovies.PopularResponse
-import com.example.domain.entity.dto.topRate.TopRateResponse
-import com.example.domain.entity.dto.upComing.UpComingMoviesResponse
+import com.example.domain.entity.dto.upComing.UpComingMoviesDto
 import com.example.domain.state.DataState
-import com.example.domain.usecase.remoteUseCase.GetPopularMovies
-import com.example.domain.usecase.remoteUseCase.GetTopRateMovies
 import com.example.domain.usecase.remoteUseCase.GetUpComingMovies
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +19,7 @@ class UpComingMoviesViewModel @Inject constructor(
     private val getUpComingMoviesUseCase: GetUpComingMovies
 ) : ViewModel() {
 
-    private val _upComingMovies: MutableStateFlow<DataState<BaseResponse<List<UpComingMoviesResponse>>>> =
+    private val _upComingMovies: MutableStateFlow<DataState<BaseResponse<List<UpComingMoviesDto>>>> =
         MutableStateFlow(DataState.Idle)
     val upComingMovies = _upComingMovies.asStateFlow()
 

@@ -18,7 +18,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.You
 
 class RvMoviesVideosAdapter @Inject constructor() :
     ListAdapter<Result, RvMoviesVideosAdapter.ProductViewHolder>(PRODUCT_COMPARATOR) {
-    private lateinit var listener: OnItemClickListener
+    //private lateinit var listener: OnItemClickListener
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ProductViewHolder(
@@ -82,21 +82,21 @@ class RvMoviesVideosAdapter @Inject constructor() :
                 })
 
                 // Handle click event
-                root.setOnClickListener {
-                    listener.onToRateItemClicked(model)
-                }
+//                root.setOnClickListener {
+//                    listener.onToRateItemClicked(model)
+//                }
             }
         }
     }
 
 
-
-    fun setListener(listener: OnItemClickListener) {
-        this.listener = listener
-    }
-    interface OnItemClickListener {
-        fun onToRateItemClicked(model: Result)
-    }
+//
+//    fun setListener(listener: OnItemClickListener) {
+//        this.listener = listener
+//    }
+//    interface OnItemClickListener {
+//        fun onToRateItemClicked(model: Result)
+//    }
 
 
     //check difference

@@ -1,6 +1,5 @@
 package com.example.aflamy.presentation.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -40,7 +39,6 @@ class MainActivity : AppCompatActivity() {
         binding.mainBn.setupWithNavController(navController)
 
         setupNavBottomVisibility()
-
 
     }
 

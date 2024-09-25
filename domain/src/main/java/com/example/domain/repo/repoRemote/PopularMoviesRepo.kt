@@ -1,8 +1,6 @@
 package com.example.domain.repo.repoRemote
 
 import com.example.domain.entity.BaseResponse
-import com.example.domain.entity.dto.newPlaying.NowPlayingMovieResponse
-import com.example.domain.entity.dto.popularMovies.PopularMoviesResponse
 import com.example.domain.entity.dto.popularMovies.PopularResponse
 import com.example.domain.state.DataState
 import kotlinx.coroutines.flow.Flow

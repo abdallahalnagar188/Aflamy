@@ -1,5 +1,4 @@
-package com.example.domain.entity.dto.movieDetails.similer
-
+package com.example.domain.entity.dto.topRate
 
 import android.os.Parcelable
 import com.example.domain.entity.models.MovieModel
@@ -7,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class SimilarMovies(
+data class TopRateMoviesDto(
     @SerializedName("adult")
     var adult: Boolean?,
     @SerializedName("backdrop_path")
@@ -36,7 +35,7 @@ data class SimilarMovies(
     var voteAverage: Double?,
     @SerializedName("vote_count")
     var voteCount: Int?
-): Parcelable {
+) : Parcelable {
 
     fun toMovieModel(): MovieModel {
         return MovieModel(

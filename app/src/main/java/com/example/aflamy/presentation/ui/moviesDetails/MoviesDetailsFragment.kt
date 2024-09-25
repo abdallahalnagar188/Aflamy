@@ -1,5 +1,6 @@
 package com.example.aflamy.presentation.ui.moviesDetails
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.example.aflamy.R
 import com.example.aflamy.constance.API_Key
 import com.example.aflamy.databinding.FragmentMoviesDetailsBinding
 import com.example.aflamy.genrel.navOptionsAnimation
+import com.example.aflamy.presentation.adapter.details.RvMovieTypesAdapter
 import com.example.aflamy.presentation.adapter.details.RvMoviesActorsAdapter
 import com.example.aflamy.presentation.adapter.details.RvMoviesVideosAdapter
 import com.example.aflamy.presentation.adapter.details.RvSimilarMoviesAdapter
@@ -35,7 +37,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
-    RvMoviesVideosAdapter.OnItemClickListener, RvMoviesActorsAdapter.OnItemClickListener,
+//    RvMoviesVideosAdapter.OnItemClickListener, RvMoviesActorsAdapter.OnItemClickListener,
     RvSimilarMoviesAdapter.OnItemClickListener {
 
     override val bindingInflater: (LayoutInflater) -> ViewBinding
@@ -55,6 +57,9 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
     @Inject
     lateinit var similarAdapter: RvSimilarMoviesAdapter
 
+    @Inject
+    lateinit var movieTypesAdapter: RvMovieTypesAdapter
+
     private var currentMovie: MovieDetailsResponse? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,6 +73,7 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
         setupListener()
     }
 
+    @SuppressLint("DefaultLocale")
     private fun assignData(model: MovieDetailsResponse?) {
         currentMovie = model
         binding.apply {
@@ -76,21 +82,7 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
             tvDescription.text = model?.overview
             tvYear.text = model?.releaseDate
             tvDuration.text = getString(R.string.s_minute, model?.runtime.toString())
-
-            val genres = model?.genres ?: emptyList()
-            if (genres.isNotEmpty()) {
-                val firstGenre = if (genres.size > 0) genres[0] else null
-                val secondGenre = if (genres.size > 1) genres[1] else null
-                val thirdGenre = if (genres.size > 2) genres[2] else null
-
-                movieType1.text = firstGenre?.name ?: ""
-                movieType2.text = secondGenre?.name ?: ""
-                movieType3.text = thirdGenre?.name ?: ""
-            } else {
-                movieType1.visibility = View.GONE
-                movieType2.visibility = View.GONE
-                movieType3.visibility = View.GONE
-            }
+            movieTypesAdapter.submitList(model?.genres?.map { it?.name ?: "" })
 
             Glide.with(requireContext())
                 .load("https://image.tmdb.org/t/p/w500${model?.backdropPath}")
@@ -107,8 +99,9 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
         binding.rvActors.adapter = actorsAdapter
         binding.rvSimilarMovies.adapter = similarAdapter
         similarAdapter.setListener(this)
-        videoAdapter.setListener(this)
-        actorsAdapter.setListener(this)
+        binding.movieTypes.adapter = movieTypesAdapter
+//        videoAdapter.setListener(this)
+//        actorsAdapter.setListener(this)
 
     }
 
@@ -268,7 +261,7 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
         StatusBarUtil.whiteWithBackground(requireActivity(), R.color.black)
         binding.apply {
             btnBack.setOnClickListener {
-                findNavController().navigateUp()
+                findNavController().popBackStack()
             }
             btnBookmark.setOnClickListener {
                 currentMovie?.let { movie ->
@@ -296,14 +289,6 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
                 }
             }
         }
-    }
-
-    override fun onToRateItemClicked(model: Result) {
-
-    }
-
-    override fun onToRateItemClicked(model: Cast) {
-
     }
 
     override fun onItemClicked(model: MovieModel) {
