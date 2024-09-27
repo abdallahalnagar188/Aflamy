@@ -15,6 +15,12 @@
     <string name="tv_videos">الفيديوهات</string>
     <string name="tv_actors">الممثلين</string>
     <string name="related_movies">افلام مشابهه</string>
+    <string name="show_more">مشاهدة المزيد</string>
+    <string name="show_less">مشاهده اقل</string>
+    <string name="up_coming_movies">الأفلام القادمة</string>
+    <string name="now_playing">يعرض الان</string>
+    <string name="top_rate_movies">الاعلي تقيما</string>
+    <string name="popular_movies">أفلام شعبية</string>
     <string-array name="language_options">
         <item>الانجليزيه</item>
         <item>العربيه</item>

@@ -15,7 +15,6 @@ object LocalUtil {
         sharedPreferences = context.getSharedPreferences("local", Context.MODE_PRIVATE)
     }
 
-
     // Load the saved language and apply it
     fun loadLocal(activity: Activity) {
         val language = sharedPreferences.getString(LANGUAGE, "ar") ?: "ar"
@@ -32,20 +31,21 @@ object LocalUtil {
         return sharedPreferences.getString(LANGUAGE, "ar") == "en"
     }
 
+    // Set the locale and apply it to the activity
     fun setLocal(activity: Activity, language: String) {
         sharedPreferences.edit().putString(LANGUAGE, language).apply()
         updateResources(activity, language)
     }
 
+    // Update the app's resources and layout direction
     private fun updateResources(activity: Activity, language: String) {
         val locale = Locale(language)
         Locale.setDefault(locale)
         val config = Configuration(activity.resources.configuration)
         config.setLocale(locale)
+       // config.setLayoutDirection(locale) // Ensure RTL/LTR is applied based on the locale
+
         activity.baseContext.resources.updateConfiguration(config, activity.baseContext.resources.displayMetrics)
-        activity.recreate() // Recreate activity to apply the new locale
+        activity.recreate() // Recreate activity to apply the new locale and layout direction
     }
-
-
 }
-

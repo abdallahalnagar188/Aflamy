@@ -14,6 +14,12 @@
     <string name="tv_videos">Videos</string>
     <string name="tv_actors">Actors</string>
     <string name="related_movies">Related Movies</string>
+    <string name="show_more">Show More</string>
+    <string name="show_less">Show Less</string>
+    <string name="up_coming_movies">Up Coming Movies</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="top_rate_movies">Top Rate Movies</string>
+    <string name="popular_movies">Popular Movies</string>
 
     <string-array name="language_options">
         <item>English</item>

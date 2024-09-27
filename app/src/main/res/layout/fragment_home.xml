@@ -55,7 +55,7 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_bold"
-                android:text="Popular Movies"
+                android:text="@string/popular_movies"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14ssp"
                 />
@@ -68,7 +68,7 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_medium"
-                android:text="see more"
+                android:text="@string/show_more"
                 android:padding="@dimen/_6sdp"
                 android:background="@drawable/see_more_background"
                 android:textColor="@color/white"
@@ -86,7 +86,7 @@
                 android:orientation="horizontal"
                 android:clipToPadding="false"
                 android:clipChildren="false"
-                tools:listitem="@layout/item_movie_home"
+                tools:listitem="@layout/item_movie_in_top_home"
                 />
 
             <!-- First include: home_top_rate layout -->

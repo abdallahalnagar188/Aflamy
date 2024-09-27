@@ -19,6 +19,7 @@
         android:name="com.example.aflamy.presentation.ui.home.HomeFragment"
         android:label="Home Fragment"
         tools:layout="@layout/fragment_home">
+
     </fragment>
     <fragment
         android:id="@+id/searchFragment"

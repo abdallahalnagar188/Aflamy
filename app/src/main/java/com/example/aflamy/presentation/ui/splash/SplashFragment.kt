@@ -10,7 +10,9 @@ import androidx.viewbinding.ViewBinding
 import com.example.aflamy.R
 import com.example.aflamy.databinding.FragmentSpalshBinding
 import com.example.aflamy.presentation.ui.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashFragment : BaseFragment<FragmentSpalshBinding>() {
 
     override val bindingInflater: (LayoutInflater) -> ViewBinding

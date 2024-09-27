@@ -2,6 +2,7 @@ package com.example.aflamy.presentation.ui.moviesDetails
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Spanned
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -62,6 +63,8 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
 
     private var currentMovie: MovieDetailsResponse? = null
 
+    var isTextExpanded = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -79,7 +82,7 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
         binding.apply {
             tvMovieTitle.text = model?.originalTitle
             tvRating.text = String.format("%.1f", model?.voteAverage ?: 0.0)
-            tvDescription.text = model?.overview
+
             tvYear.text = model?.releaseDate
             tvDuration.text = getString(R.string.s_minute, model?.runtime.toString())
             movieTypesAdapter.submitList(model?.genres?.map { it?.name ?: "" })
@@ -91,6 +94,29 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
                 .load("https://image.tmdb.org/t/p/w500${model?.posterPath}")
                 .into(ivMovie)
             Log.e("genres", "assignData: ${model?.genres}")
+
+            val spannedText = model?.overview ?: ""
+            tvDescription.text = spannedText
+            // Define a character limit for the collapsed state
+            val maxCharCount = 100
+
+            // Update the TextView based on the expanded state
+            updateTextView(spannedText, maxCharCount)
+
+            // Check if the content exceeds the character limit after it's rendered
+            tvDescription.post {
+                if (spannedText.length <= maxCharCount) {
+                    binding.tvShowMore.visibility = View.GONE // Hide 'Show More' if text fits
+                } else {
+                    binding.tvShowMore.visibility = View.VISIBLE
+                }
+            }
+
+            // Set a click listener on the 'Show More' TextView to toggle text expansion
+            binding.tvShowMore.setOnClickListener {
+                isTextExpanded = !isTextExpanded
+                updateTextView(spannedText, maxCharCount)
+            }
         }
     }
 
@@ -117,6 +143,26 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
         similarAdapter.submitList(list)
     }
 
+
+    private fun updateTextView(spannedText: String, maxCharCount: Int) {
+        binding.apply {
+            if (isTextExpanded) {
+                // Show full text
+                tvDescription.text = spannedText
+                tvShowMore.text = getString(R.string.show_less)
+            } else {
+                // Show truncated text if it exceeds maxCharCount
+                if (spannedText.length > maxCharCount) {
+                    val truncatedText = spannedText.subSequence(0, maxCharCount).toString() + "..."
+                    tvDescription.text = truncatedText
+                    tvShowMore.text = getString(R.string.show_more)
+                } else {
+                    tvDescription.text = spannedText
+                    tvShowMore.visibility = View.GONE // Hide 'Show More' if the text is short
+                }
+            }
+        }
+    }
     private fun fetchSimilarMovies() {
         val movieId = args.movieId
         similarViewModel.getUpComingMovies(movieId, API_Key)

@@ -16,6 +16,7 @@ import com.example.aflamy.presentation.adapter.home.RvHomePopularMoviesAdapter
 import com.example.aflamy.presentation.adapter.home.RvHomeTopRateMoviesAdapter
 import com.example.aflamy.presentation.adapter.home.RvHomeUpComingMoviesAdapter
 import com.example.aflamy.presentation.ui.BaseFragment
+import com.example.aflamy.presentation.ui.MainActivity
 import com.example.aflamy.presentation.ui.home.viewmodel.NewPlayingMoviesViewModel
 import com.example.aflamy.presentation.ui.home.viewmodel.PopularMoviesViewModel
 import com.example.aflamy.presentation.ui.home.viewmodel.TopRateMoviesViewModel
@@ -99,16 +100,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
             findNavController().navigate(R.id.seeMoreTopRateMoviesFragment)
         }
         binding.homeTopBar.ivSearch.setOnClickListener {
+            (activity as? MainActivity)?.binding?.mainBn?.selectedItemId = R.id.searchFragment
 
-           // findNavController().navigate(R.id.searchFragment)
         }
         binding.homeTopBar.ivNotification.setOnClickListener {
 
-            // findNavController().navigate(R.id.notificationFragment)
+
         }
         binding.homeTopBar.ivSettings.setOnClickListener {
 
-            //findNavController().navigate(R.id.settingsFragment)
+            (activity as? MainActivity)?.binding?.mainBn?.selectedItemId = R.id.settingsFragment
+
         }
 
     }

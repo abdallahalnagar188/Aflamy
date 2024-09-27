@@ -218,6 +218,20 @@
             tools:text="From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains..." />
 
         <TextView
+            android:id="@+id/tvShowMore"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/show_more"
+            android:textColor="@color/gray_low"
+            android:textSize="@dimen/_10ssp"
+            android:textAllCaps="false"
+            android:fontFamily="@font/poppins_medium"
+            android:textAlignment="viewEnd"
+            app:layout_constraintEnd_toEndOf="@+id/tvDescription"
+            app:layout_constraintStart_toStartOf="@+id/tvDescription"
+            app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+
+        <TextView
             android:id="@+id/tv_videos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
