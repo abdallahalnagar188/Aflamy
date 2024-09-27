@@ -33,7 +33,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginHorizontal="@dimen/_6sdp"
             android:layout_marginVertical="@dimen/_12sdp"
-            app:cardCornerRadius="@dimen/_4sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
             android:backgroundTint="#CC757575"
             >
 
@@ -42,7 +42,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:padding="@dimen/_2sdp"
+                android:paddingHorizontal="@dimen/_4sdp"
+                android:paddingVertical="@dimen/_3sdp"
                 >
                 <ImageView
                     android:id="@+id/ic_star_rate"
