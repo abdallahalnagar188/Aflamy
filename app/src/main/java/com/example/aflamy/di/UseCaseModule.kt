@@ -1,7 +1,9 @@
 package com.example.aflamy.di
 
+import com.example.domain.repo.repoRemote.GenresRepo
 import com.example.domain.repo.repoRemote.MovieActorsRepo
 import com.example.domain.repo.repoRemote.MovieVideosRepo
+import com.example.domain.repo.repoRemote.MoviesByGenresPagesRepo
 import com.example.domain.repo.repoRemote.MoviesDetailsRepo
 import com.example.domain.repo.repoRemote.NewPlayingMoviesRepo
 import com.example.domain.repo.repoRemote.PopularMoviesInPagesRepo
@@ -12,9 +14,11 @@ import com.example.domain.repo.repoRemote.TopRateMoviesInPagesRepo
 import com.example.domain.repo.repoRemote.TopRateMoviesRepo
 import com.example.domain.repo.repoRemote.UpComingMoviesRepo
 import com.example.domain.repo.repoRoom.WishlistRepository
+import com.example.domain.usecase.remoteUseCase.GetGenres
 import com.example.domain.usecase.remoteUseCase.GetMovieActors
 import com.example.domain.usecase.remoteUseCase.GetMovieDetails
 import com.example.domain.usecase.remoteUseCase.GetMovieVideos
+import com.example.domain.usecase.remoteUseCase.GetMoviesByGenresInPages
 import com.example.domain.usecase.remoteUseCase.GetNewPlayingMovies
 import com.example.domain.usecase.remoteUseCase.GetPopularMovies
 import com.example.domain.usecase.remoteUseCase.GetPopularMoviesInPages
@@ -98,6 +102,12 @@ object UseCaseModule {
 
     @Provides
     @Singleton
+    fun provideMoviesByGenresInPagesUseCase(moviesByGenresInPages: MoviesByGenresPagesRepo): GetMoviesByGenresInPages {
+        return GetMoviesByGenresInPages(moviesByGenresInPages)
+    }
+
+    @Provides
+    @Singleton
     fun provideSearchMoviesUseCase(searchRepo: SearchRepo): GetSearchResult {
         return GetSearchResult(searchRepo)
     }
@@ -115,6 +125,11 @@ object UseCaseModule {
     @Provides
     fun provideGetWishlistMoviesUseCase(repository: WishlistRepository): GetWishlistMoviesUseCase {
         return GetWishlistMoviesUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetGenresUseCase(repository: GenresRepo): GetGenres {
+        return GetGenres(repository)
     }
 
 }

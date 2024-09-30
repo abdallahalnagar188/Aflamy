@@ -1,6 +1,8 @@
 package com.example.data.remote
 
 import com.example.domain.entity.BaseResponse
+import com.example.domain.entity.dto.genres.GenresResponse
+import com.example.domain.entity.dto.movieByGenres.MovieByGenresResponse
 import com.example.domain.entity.dto.movieDetails.MovieDetailsResponse
 import com.example.domain.entity.dto.movieDetails.actors.MovieActorsResponse
 import com.example.domain.entity.dto.movieDetails.similer.SimilarMoviesDto
@@ -66,12 +68,26 @@ interface Api {
         @Query("page") page: Int = 1
     ): BaseResponse<List<SimilarMoviesDto>>
 
+    @GET("discover/movie")
+    suspend fun getMoviesByGenres(
+        @Query("with_genres") withoutGenres: String,
+        @Query("api_key") apiKey: String,
+        @Query("page") page: Int = 1
+    ): MovieByGenresResponse
+
     @GET("search/movie")
     suspend fun searchMovies(
         @Query("api_key") apiKey: String,
         @Query("query") query: String,
         @Query("page") page: Int = 1
     ): SearchResponse
+
+    @GET("genre/movie/list")
+    suspend fun getGenres(
+        @Query("api_key") apiKey: String,
+    ): GenresResponse
+
+
 
 
 } 

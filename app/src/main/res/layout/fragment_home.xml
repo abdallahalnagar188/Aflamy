@@ -90,13 +90,24 @@
                 />
 
             <!-- First include: home_top_rate layout -->
+
+            <include
+                android:id="@+id/home_genres"
+                layout="@layout/home_geners"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_popular_movies"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
             <include
                 android:id="@+id/home_top_rate"
                 layout="@layout/home_top_rate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_popular_movies"
+                app:layout_constraintTop_toBottomOf="@+id/home_genres"
                 app:layout_constraintEnd_toEndOf="parent"
                 />
 

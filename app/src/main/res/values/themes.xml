@@ -21,4 +21,26 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+
+    <style name="ShapeAppearance.BottomAppBar.Corner" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item> <!-- Adjust this value to control the corner radius -->
+    </style>
+
+    <style name="ShapeAppearance.BottomAppBar.ReducedCorner" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item> <!-- Adjust this value for the desired smaller corner radius -->
+    </style>
+
+    <style name="CustomBottomAppBarShape" parent="Widget.MaterialComponents.BottomAppBar">
+        <item name="shapeAppearanceOverlay">@style/CustomBottomAppBarShapeAppearance</item>
+    </style>
+
+    <style name="CustomBottomAppBarShapeAppearance" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">20dp</item> <!-- Top-right corner reduced -->
+        <item name="cornerSizeTopLeft">20dp</item>  <!-- Top-left corner reduced -->
+    </style>
+
+
 </resources>

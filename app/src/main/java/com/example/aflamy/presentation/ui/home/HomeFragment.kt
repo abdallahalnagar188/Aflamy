@@ -1,6 +1,7 @@
 package com.example.aflamy.presentation.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -11,18 +12,24 @@ import androidx.viewbinding.ViewBinding
 import com.example.aflamy.R
 import com.example.aflamy.constance.API_Key
 import com.example.aflamy.databinding.FragmentHomeBinding
+import com.example.aflamy.presentation.adapter.home.RvHomeGenresAdapter
 import com.example.aflamy.presentation.adapter.home.RvHomeNowPlayingMoviesAdapter
 import com.example.aflamy.presentation.adapter.home.RvHomePopularMoviesAdapter
 import com.example.aflamy.presentation.adapter.home.RvHomeTopRateMoviesAdapter
 import com.example.aflamy.presentation.adapter.home.RvHomeUpComingMoviesAdapter
+import com.example.aflamy.presentation.dialog.LoadingDialog
 import com.example.aflamy.presentation.ui.BaseFragment
 import com.example.aflamy.presentation.ui.MainActivity
+import com.example.aflamy.presentation.ui.home.viewmodel.GenresViewModel
 import com.example.aflamy.presentation.ui.home.viewmodel.NewPlayingMoviesViewModel
 import com.example.aflamy.presentation.ui.home.viewmodel.PopularMoviesViewModel
 import com.example.aflamy.presentation.ui.home.viewmodel.TopRateMoviesViewModel
 import com.example.aflamy.presentation.ui.home.viewmodel.UpComingMoviesViewModel
 import com.example.aflamy.presentation.viewmodel.HomeViewModel
+import com.example.domain.entity.dto.genres.GenreDto
 import com.example.domain.entity.models.MovieModel
+import com.example.domain.state.Resource
+import com.example.domain.state.UiState
 import com.example.domain.state.applyCommonSideEffects
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -33,7 +40,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
     RvHomePopularMoviesAdapter.OnItemClickListener,
     RvHomeTopRateMoviesAdapter.OnItemClickListener,
     RvHomeNowPlayingMoviesAdapter.OnItemClickListener,
-    RvHomeUpComingMoviesAdapter.OnItemClickListener {
+    RvHomeUpComingMoviesAdapter.OnItemClickListener,
+    RvHomeGenresAdapter.OnItemClickListener {
 
     override val bindingInflater: (LayoutInflater) -> ViewBinding
         get() = FragmentHomeBinding::inflate
@@ -43,6 +51,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
     private val popularViewModel: PopularMoviesViewModel by viewModels()
     private val topRateViewModel: TopRateMoviesViewModel by viewModels()
     private val upComingViewModel: UpComingMoviesViewModel by viewModels()
+    private val genresViewModel: GenresViewModel by viewModels()
 
 
     @Inject
@@ -57,6 +66,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
     @Inject
     lateinit var rvHomeUpComingMoviesAdapter: RvHomeUpComingMoviesAdapter
 
+    @Inject
+    lateinit var rvHomeGenresAdapter: RvHomeGenresAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -64,6 +76,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
         binding.homeTopRate.rvTopRate.adapter = rvHomeTopRateMoviesAdapter
         binding.homeNowPlaying.rvNowPlaying.adapter = rvHomeNowPlayingMoviesAdapter
         binding.homUpComing.rvUpComing.adapter = rvHomeNowPlayingMoviesAdapter
+        binding.homeGenres.rvHomeGenres.adapter = rvHomeGenresAdapter
 
         setupListeners()
         finishApp()
@@ -88,6 +101,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
         fetchTopRateMovies()
         fetchNowPlayingMovies()
         fetchUpComingMovies()
+        fetchGenres()
 
     }
 
@@ -161,6 +175,33 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
         }
     }
 
+    private fun fetchGenres() {
+        genresViewModel.getGenres(API_Key)
+
+        lifecycleScope.launch {
+            genresViewModel.upComingMovies.collect { state ->
+                when(state){
+                    is UiState.Success ->{
+                        state.data?.genres?.let { setupGenresRv(it) }
+                        LoadingDialog.dismissDialog()
+                    }
+                    is UiState.Error ->{
+                        LoadingDialog.dismissDialog()
+                        state.message}
+
+                    is UiState.Loading ->{
+                        LoadingDialog.showDialog()
+                    }
+
+                    is UiState.Empty ->
+                        state.message
+                }
+
+            }
+        }
+
+    }
+
 
     private fun setupPopularRv(list: List<MovieModel>) {
         rvHomePopularMoviesAdapter.submitList(list)
@@ -180,6 +221,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
     private fun setupUpComingRv(list: List<MovieModel>) {
         rvHomeUpComingMoviesAdapter.submitList(list)
         rvHomeUpComingMoviesAdapter.setListener(this)
+    }
+
+    private fun setupGenresRv(list: List<GenreDto>) {
+        rvHomeGenresAdapter.submitList(list)
+        rvHomeGenresAdapter.setListener(this)
     }
 
     override fun onPopularItemClicked(model: MovieModel) {
@@ -220,5 +266,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
                 model.id?.let { putInt("movieId", it) }
             },
         )
+    }
+
+    override fun onToRateItemClicked(model: GenreDto) {
+       findNavController().navigate(
+           R.id.moviesByGenresFragment,
+           Bundle().apply {
+               model.id?.let { putInt("genreId", it) }.also { model.name?.let { it1 -> putString("genreName", it1) } }
+           },
+       )
+
+        Log.e("genreId", "onToRateItemClicked: ${model.id}")
     }
 }

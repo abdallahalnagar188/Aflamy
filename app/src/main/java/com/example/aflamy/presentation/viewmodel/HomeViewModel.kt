@@ -4,28 +4,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.aflamy.R
 import com.example.domain.entity.models.MovieModel
-import com.example.domain.state.UiState
-import com.example.domain.state.UiText
-import com.example.domain.usecase.remoteUseCase.GetNewPlayingMovies
-import com.example.domain.usecase.remoteUseCase.GetPopularMovies
+import com.example.domain.usecase.remoteUseCase.GetMoviesByGenresInPages
 import com.example.domain.usecase.remoteUseCase.GetPopularMoviesInPages
-import com.example.domain.usecase.remoteUseCase.GetTopRateMovies
 import com.example.domain.usecase.remoteUseCase.GetTopRateMoviesInPages
-import com.example.domain.usecase.remoteUseCase.GetUpComingMovies
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getPopularMoviesInPagesUseCase: GetPopularMoviesInPages,
-    private val getTopRateMoviesInPagesUseCase: GetTopRateMoviesInPages
+    private val getTopRateMoviesInPagesUseCase: GetTopRateMoviesInPages,
+    private val getMoviesByGenresInPagesUseCase: GetMoviesByGenresInPages
 ) : ViewModel() {
 
     //---------------------------------------------------------------------------//
@@ -38,6 +30,9 @@ class HomeViewModel @Inject constructor(
     }
     suspend fun getTopRateMoviesInPages(apiKey: String): Flow<PagingData<MovieModel>> {
         return getTopRateMoviesInPagesUseCase(apiKey).cachedIn(viewModelScope)
+    }
+    suspend fun getMoviesByGenresInPages(apiKey: String, genreId: String): Flow<PagingData<MovieModel>> {
+        return getMoviesByGenresInPagesUseCase(apiKey, genreId).cachedIn(viewModelScope)
     }
 
 

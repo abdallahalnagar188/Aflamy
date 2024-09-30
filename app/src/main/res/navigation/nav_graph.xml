@@ -35,6 +35,18 @@
     </fragment>
 
     <fragment
+        android:id="@+id/moviesByGenresFragment"
+        android:name="com.example.aflamy.presentation.ui.home.moviesByGenres.MoviesByGenresFragment"
+        android:label="Movies By Genres Fragment"
+        tools:layout="@layout/fragment_see_more_popular_movies">
+        <argument
+            android:name="genreId"
+            app:argType="integer" />
+        <argument
+            android:name="genreName"
+            app:argType="string" />
+    </fragment>
+    <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.aflamy.presentation.ui.settings.SettingsFragment"
         android:label="Settings Fragment"

@@ -1,8 +1,10 @@
 package com.example.aflamy.di
 
 import com.example.data.remote.Api
+import com.example.data.repoImpl.GenresRepoImpl
 import com.example.data.repoImpl.MovieActorsRepoImpl
 import com.example.data.repoImpl.MovieVideosRepoImpl
+import com.example.data.repoImpl.MoviesByGenresPagesRepoImpl
 import com.example.data.repoImpl.MoviesDetailsRepoImpl
 import com.example.data.repoImpl.NowPlayingMoviesRepoImpl
 import com.example.data.repoImpl.PopularMoviesInPagesRepoImpl
@@ -12,8 +14,10 @@ import com.example.data.repoImpl.SimilarRepoImpl
 import com.example.data.repoImpl.TopRateMoviesInPagesRepoImpl
 import com.example.data.repoImpl.TopRateMoviesRepoImpl
 import com.example.data.repoImpl.UpComingMoviesRepoImpl
+import com.example.domain.repo.repoRemote.GenresRepo
 import com.example.domain.repo.repoRemote.MovieActorsRepo
 import com.example.domain.repo.repoRemote.MovieVideosRepo
+import com.example.domain.repo.repoRemote.MoviesByGenresPagesRepo
 import com.example.domain.repo.repoRemote.MoviesDetailsRepo
 import com.example.domain.repo.repoRemote.NewPlayingMoviesRepo
 import com.example.domain.repo.repoRemote.PopularMoviesInPagesRepo
@@ -90,11 +94,22 @@ object RepoModule {
     fun provideTopRateMoviesInPagesRepo(apiService: Api): TopRateMoviesInPagesRepo {
         return TopRateMoviesInPagesRepoImpl(apiService)
     }
+    @Provides
+    @Singleton
+    fun provideMoviesByGenresInPagesRepo(apiService: Api): MoviesByGenresPagesRepo {
+        return MoviesByGenresPagesRepoImpl(apiService)
+    }
 
     @Provides
     @Singleton
     fun provideSearchRepo(apiService: Api): SearchRepo {
         return SearchRepoImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGenresRepo(apiService: Api): GenresRepo {
+        return GenresRepoImpl(apiService)
     }
 
 

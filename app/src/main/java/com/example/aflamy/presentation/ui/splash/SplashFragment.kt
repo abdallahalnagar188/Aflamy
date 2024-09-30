@@ -24,6 +24,6 @@ class SplashFragment : BaseFragment<FragmentSpalshBinding>() {
         // Using Handler with Looper to post a delayed action
         Handler(Looper.getMainLooper()).postDelayed({
             findNavController().navigate(R.id.action_firstFragment_to_secondFragment)
-        }, 2000)
+        }, 2500)
     }
 }

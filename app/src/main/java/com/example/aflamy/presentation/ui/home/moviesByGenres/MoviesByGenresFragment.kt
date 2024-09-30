@@ -1,29 +1,30 @@
-package com.example.aflamy.presentation.ui.home.more.topRate
+package com.example.aflamy.presentation.ui.home.moviesByGenres
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.paging.map
 import androidx.viewbinding.ViewBinding
 import com.example.aflamy.R
 import com.example.aflamy.constance.API_Key
 import com.example.aflamy.databinding.FragmentSeeMorePopularMoviesBinding
 import com.example.aflamy.genrel.navOptionsAnimation
-import com.example.aflamy.presentation.adapter.home.PopularMoviesPagingAdapter
-import com.example.aflamy.presentation.dialog.LoadingDialog
+import com.example.aflamy.presentation.adapter.home.MoviesByGenresPagingAdapter
 import com.example.aflamy.presentation.ui.BaseFragment
 import com.example.aflamy.presentation.viewmodel.HomeViewModel
 import com.example.domain.entity.models.MovieModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SeeMoreTopRateMoviesFragment : BaseFragment<FragmentSeeMorePopularMoviesBinding>(),
-    PopularMoviesPagingAdapter.OnItemClickListener {
+class MoviesByGenresFragment : BaseFragment<FragmentSeeMorePopularMoviesBinding>(),
+    MoviesByGenresPagingAdapter.OnItemClickListener {
 
     override val bindingInflater: (LayoutInflater) -> ViewBinding
         get() = FragmentSeeMorePopularMoviesBinding::inflate
@@ -31,40 +32,47 @@ class SeeMoreTopRateMoviesFragment : BaseFragment<FragmentSeeMorePopularMoviesBi
     private val viewModel: HomeViewModel by viewModels()
 
     @Inject
-    lateinit var adapter: PopularMoviesPagingAdapter
+    lateinit var adapter: MoviesByGenresPagingAdapter
+
+    private val args: MoviesByGenresFragmentArgs by navArgs()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.e("genreId", "onToRateItemClicked: ${args.genreId}")
         setupRecyclerView()
         fetchPopularMovies()
         setupListeners()
-
+        fetchPopularMovies()
     }
 
 
     private fun setupRecyclerView() {
-        // Initialize the adapter
-        adapter = PopularMoviesPagingAdapter()
-        adapter.setListener(this)
         binding.rvPopularMovies.adapter = adapter
-
+        adapter.setListener(this)
     }
 
     private fun fetchPopularMovies() {
         // Collect the paging data from the ViewModel
         lifecycleScope.launch {
-            viewModel.getTopRateMoviesInPages(apiKey = API_Key).collect { pagingData ->
-                adapter.submitData(pagingData)
-            }
+            viewModel.getMoviesByGenresInPages(apiKey = API_Key, genreId = args.genreId.toString())
+                .collect { pagingData ->
+                    // Debug the data
+                    pagingData.map { movieModel ->
+                        Log.e("PagingData", "Movie: ${movieModel.title}, ID: ${movieModel.id}")
+                    }
+                    adapter.submitData(pagingData)
+                }
         }
     }
+
 
     private fun setupListeners() {
         binding.apply {
             topBar.ivBack.setOnClickListener {
                 findNavController().popBackStack()
             }
-            topBar.tvTitle.text = getString(R.string.more_top_rate_movies)
+            topBar.tvTitle.text = "${args.genreName} Movies"
         }
     }
 
