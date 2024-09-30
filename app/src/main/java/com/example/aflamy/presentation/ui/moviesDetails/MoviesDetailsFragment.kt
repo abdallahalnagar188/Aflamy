@@ -2,7 +2,6 @@ package com.example.aflamy.presentation.ui.moviesDetails
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.Spanned
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -341,7 +340,7 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
 
         findNavController().navigate(R.id.moviesDetailsFragment, Bundle().apply {
             model.id?.let { putInt("movieId", it) }
-        }, navOptionsAnimation()
+        }
         )
 
     }

@@ -72,7 +72,7 @@ class SeeMoreTopRateMoviesFragment : BaseFragment<FragmentSeeMorePopularMoviesBi
         findNavController().navigate(
             R.id.moviesDetailsFragment, Bundle().apply {
                 model.id?.let { putInt("movieId", it) }
-            }, navOptionsAnimation()
+            }
         )
     }
 }

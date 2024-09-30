@@ -71,7 +71,7 @@ class SeeMorePopularMoviesFragment : BaseFragment<FragmentSeeMorePopularMoviesBi
     override fun onItemClicked(model: MovieModel) {
         findNavController().navigate(R.id.moviesDetailsFragment, Bundle().apply {
             model.id?.let { putInt("movieId", it) }
-        },navOptionsAnimation()
+        }
         )
     }
 }
