@@ -37,12 +37,13 @@
             tools:src="@drawable/iv_movie" />
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="@dimen/_22sdp"
-            android:layout_height="@dimen/_22sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
-            android:padding="@dimen/_2sdp"
             android:layout_marginTop="@dimen/_12sdp"
+            android:padding="@dimen/_4sdp"
             android:background="@drawable/see_more_background"
+            android:backgroundTint="@color/gray"
             android:src="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

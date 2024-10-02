@@ -6,6 +6,7 @@ import com.example.data.repoImpl.MovieActorsRepoImpl
 import com.example.data.repoImpl.MovieVideosRepoImpl
 import com.example.data.repoImpl.MoviesByGenresPagesRepoImpl
 import com.example.data.repoImpl.MoviesDetailsRepoImpl
+import com.example.data.repoImpl.MoviesForActorRepoImpl
 import com.example.data.repoImpl.NowPlayingMoviesRepoImpl
 import com.example.data.repoImpl.PopularMoviesInPagesRepoImpl
 import com.example.data.repoImpl.PopularMoviesRepoImpl
@@ -19,6 +20,7 @@ import com.example.domain.repo.repoRemote.MovieActorsRepo
 import com.example.domain.repo.repoRemote.MovieVideosRepo
 import com.example.domain.repo.repoRemote.MoviesByGenresPagesRepo
 import com.example.domain.repo.repoRemote.MoviesDetailsRepo
+import com.example.domain.repo.repoRemote.MoviesForActorRepo
 import com.example.domain.repo.repoRemote.NewPlayingMoviesRepo
 import com.example.domain.repo.repoRemote.PopularMoviesInPagesRepo
 import com.example.domain.repo.repoRemote.PopularMoviesRepo
@@ -110,6 +112,12 @@ object RepoModule {
     @Singleton
     fun provideGenresRepo(apiService: Api): GenresRepo {
         return GenresRepoImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMovieActorsRepoImpl(apiService: Api): MoviesForActorRepo {
+        return MoviesForActorRepoImpl(apiService)
     }
 
 

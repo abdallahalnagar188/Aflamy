@@ -5,6 +5,7 @@ import com.example.domain.repo.repoRemote.MovieActorsRepo
 import com.example.domain.repo.repoRemote.MovieVideosRepo
 import com.example.domain.repo.repoRemote.MoviesByGenresPagesRepo
 import com.example.domain.repo.repoRemote.MoviesDetailsRepo
+import com.example.domain.repo.repoRemote.MoviesForActorRepo
 import com.example.domain.repo.repoRemote.NewPlayingMoviesRepo
 import com.example.domain.repo.repoRemote.PopularMoviesInPagesRepo
 import com.example.domain.repo.repoRemote.PopularMoviesRepo
@@ -19,6 +20,7 @@ import com.example.domain.usecase.remoteUseCase.GetMovieActors
 import com.example.domain.usecase.remoteUseCase.GetMovieDetails
 import com.example.domain.usecase.remoteUseCase.GetMovieVideos
 import com.example.domain.usecase.remoteUseCase.GetMoviesByGenresInPages
+import com.example.domain.usecase.remoteUseCase.GetMoviesForActors
 import com.example.domain.usecase.remoteUseCase.GetNewPlayingMovies
 import com.example.domain.usecase.remoteUseCase.GetPopularMovies
 import com.example.domain.usecase.remoteUseCase.GetPopularMoviesInPages
@@ -132,4 +134,8 @@ object UseCaseModule {
         return GetGenres(repository)
     }
 
+    @Provides
+    fun provideGetMovieActorsUseCase(repository: MoviesForActorRepo): GetMoviesForActors {
+        return GetMoviesForActors(repository)
+    }
 }

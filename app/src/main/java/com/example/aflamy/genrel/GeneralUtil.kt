@@ -2,6 +2,7 @@ package com.example.aflamy.genrel
 
 import android.content.Context
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import com.example.aflamy.R
 import java.text.SimpleDateFormat
@@ -37,15 +38,15 @@ fun navOptionsFromTopAnimation(): NavOptions {
 
 }
 
-fun formatDate(dateString: String): String {
+fun formatDate(dateString: String): String? {
     val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     val outputFormat = SimpleDateFormat("yyyy", Locale.getDefault())
     val date = inputFormat.parse(dateString)
-    return outputFormat.format(date)
+    return date?.let { outputFormat.format(it) }
 }
 
-fun showToast(message: String, context: Context) {
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+fun Fragment.showToast(message: String) {
+    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
 }
 
 // -------------------------------------------------------------- //

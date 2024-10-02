@@ -22,7 +22,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.You
 
 class RvMoviesActorsAdapter @Inject constructor() :
     ListAdapter<Cast, RvMoviesActorsAdapter.ProductViewHolder>(PRODUCT_COMPARATOR) {
-    //private lateinit var listener: OnItemClickListener
+    private lateinit var listener: OnItemClickListener
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ProductViewHolder(
@@ -47,21 +47,21 @@ class RvMoviesActorsAdapter @Inject constructor() :
                     .error(R.drawable.iv_no_image)
                     .into(ivActorImage)
                 // Handle click event
-//                root.setOnClickListener {
-//                    listener.onToRateItemClicked(model)
-//                }
+                root.setOnClickListener {
+                    listener.onToRateItemClicked(model)
+                }
             }
         }
     }
 
 
 
-//    fun setListener(listener: OnItemClickListener) {
-//        this.listener = listener
-//    }
-//    interface OnItemClickListener {
-//        fun onToRateItemClicked(model: Cast)
-//    }
+    fun setListener(listener: OnItemClickListener) {
+        this.listener = listener
+    }
+    interface OnItemClickListener {
+        fun onToRateItemClicked(model: Cast)
+    }
 
 
     //check difference

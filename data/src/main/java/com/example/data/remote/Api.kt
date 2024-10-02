@@ -5,6 +5,7 @@ import com.example.domain.entity.dto.genres.GenresResponse
 import com.example.domain.entity.dto.movieByGenres.MovieByGenresResponse
 import com.example.domain.entity.dto.movieDetails.MovieDetailsResponse
 import com.example.domain.entity.dto.movieDetails.actors.MovieActorsResponse
+import com.example.domain.entity.dto.movieDetails.actors.moviesForActors.MoviesForActorResponse
 import com.example.domain.entity.dto.movieDetails.similer.SimilarMoviesDto
 import com.example.domain.entity.dto.movieDetails.viedos.MovieViediosResponse
 import com.example.domain.entity.dto.newPlaying.NowPlayingMoviesDto
@@ -67,6 +68,12 @@ interface Api {
         @Query("api_key") apiKey: String,
         @Query("page") page: Int = 1
     ): BaseResponse<List<SimilarMoviesDto>>
+
+    @GET("person/{person_id}/movie_credits")
+    suspend fun getMoviesForActor(
+        @Path("person_id") personId: Int,
+        @Query("api_key") apiKey: String
+    ): MoviesForActorResponse
 
     @GET("discover/movie")
     suspend fun getMoviesByGenres(

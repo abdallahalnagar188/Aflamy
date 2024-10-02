@@ -103,8 +103,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
     }
 
     private fun fetchMovies() {
-
-
         fetchPopularMovies()
         fetchTopRateMovies()
         fetchNowPlayingMovies()

@@ -38,7 +38,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
 //    RvMoviesVideosAdapter.OnItemClickListener, RvMoviesActorsAdapter.OnItemClickListener,
-    RvSimilarMoviesAdapter.OnItemClickListener {
+    RvSimilarMoviesAdapter.OnItemClickListener, RvMoviesActorsAdapter.OnItemClickListener {
 
     override val bindingInflater: (LayoutInflater) -> ViewBinding
         get() = FragmentMoviesDetailsBinding::inflate
@@ -135,10 +135,9 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
         binding.recyclerViewVideos.adapter = videoAdapter
         binding.rvActors.adapter = actorsAdapter
         binding.rvSimilarMovies.adapter = similarAdapter
-        similarAdapter.setListener(this)
         binding.movieTypes.adapter = movieTypesAdapter
-//        videoAdapter.setListener(this)
-//        actorsAdapter.setListener(this)
+        actorsAdapter.setListener(this)
+        similarAdapter.setListener(this)
 
     }
 
@@ -288,27 +287,13 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
                     is UiState.Error -> {
                         // Dismiss loading dialog and show error message
                         LoadingDialog.dismissDialog()
-                        Toast.makeText(
-                            requireContext(),
-                            state.message?.asString(requireContext()),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        showToast(state.message?.asString(requireContext()) ?: "",requireContext())
-                        Log.e(
-                            "TAG",
-                            "fetchMovieDetails: ${state.message?.asString(requireContext())}"
-                        )
+                        showToast((state.message ?: "").toString())
                     }
 
                     is UiState.Empty -> {
                         // Dismiss loading dialog and handle empty state
                         LoadingDialog.dismissDialog()
-                        Toast.makeText(
-                            requireContext(),
-                            "No movie details found",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Log.e("TAG", "fetchMovieDetails: No movie details found")
+                        showToast("No movie details found")
                     }
                 }
             }
@@ -356,5 +341,11 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
         }
         )
 
+    }
+
+    override fun onToRateItemClicked(model: Cast) {
+        findNavController().navigate(R.id.moviesForActorsFragment, Bundle().apply {
+            model.id?.let { putInt("personId", it) }.also { putString("personName",model.name?:"") }
+        })
     }
 }

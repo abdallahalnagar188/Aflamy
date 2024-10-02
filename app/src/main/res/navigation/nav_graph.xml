@@ -46,6 +46,19 @@
             android:name="genreName"
             app:argType="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/moviesForActorsFragment"
+        android:name="com.example.aflamy.presentation.ui.moviesDetails.MoviesForActorsFragment"
+        android:label="Movies For Actors Fragment"
+        tools:layout="@layout/fragment_see_more_popular_movies">
+        <argument
+            android:name="personId"
+            app:argType="integer" />
+        <argument
+            android:name="personName"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.aflamy.presentation.ui.settings.SettingsFragment"

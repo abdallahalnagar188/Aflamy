@@ -43,7 +43,6 @@ class MoviesByGenresFragment : BaseFragment<FragmentSeeMorePopularMoviesBinding>
         setupRecyclerView()
         fetchPopularMovies()
         setupListeners()
-        fetchPopularMovies()
     }
 
 
