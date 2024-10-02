@@ -19,8 +19,7 @@ class SimilarMoviesViewModel @Inject constructor(
     private val getSimilarMoviesUseCase: GetSimilarMovies
 ) : ViewModel() {
 
-    private val _similarMovies: MutableStateFlow<DataState<BaseResponse<List<SimilarMoviesDto>>>> =
-        MutableStateFlow(DataState.Idle)
+    private val _similarMovies: MutableStateFlow<DataState<BaseResponse<List<SimilarMoviesDto>>>> = MutableStateFlow(DataState.Idle)
     val similarMovies = _similarMovies.asStateFlow()
 
     fun getUpComingMovies(movieId: Int,apiKey: String) {

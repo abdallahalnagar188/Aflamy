@@ -78,6 +78,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
         binding.homUpComing.rvUpComing.adapter = rvHomeNowPlayingMoviesAdapter
         binding.homeGenres.rvHomeGenres.adapter = rvHomeGenresAdapter
 
+        setupSwipeToRefresh()
         setupListeners()
         finishApp()
         fetchMovies()
@@ -94,15 +95,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
             }
         )
     }
+    private fun setupSwipeToRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            // Call the function to fetch new data here
+            fetchMovies()
+        }
+    }
 
     private fun fetchMovies() {
+
 
         fetchPopularMovies()
         fetchTopRateMovies()
         fetchNowPlayingMovies()
         fetchUpComingMovies()
         fetchGenres()
-
+        binding.swipeRefreshLayout.isRefreshing = false
     }
 
 

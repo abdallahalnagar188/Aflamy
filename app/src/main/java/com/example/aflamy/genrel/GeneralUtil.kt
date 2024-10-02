@@ -1,5 +1,7 @@
 package com.example.aflamy.genrel
 
+import android.content.Context
+import android.widget.Toast
 import androidx.navigation.NavOptions
 import com.example.aflamy.R
 import java.text.SimpleDateFormat
@@ -40,6 +42,10 @@ fun formatDate(dateString: String): String {
     val outputFormat = SimpleDateFormat("yyyy", Locale.getDefault())
     val date = inputFormat.parse(dateString)
     return outputFormat.format(date)
+}
+
+fun showToast(message: String, context: Context) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
 // -------------------------------------------------------------- //

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_46sdp"
+    android:layout_height="@dimen/_50sdp"
     android:background="@color/transparent"
     android:padding="@dimen/_8sdp">
 
@@ -19,18 +19,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/white" />
 
-    <TextView
+    <ImageView
         android:id="@+id/tv_app_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Aflamy"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_16ssp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:src="@drawable/logo"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/iv_notification"
+        app:layout_constraintStart_toEndOf="@+id/iv_search"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView

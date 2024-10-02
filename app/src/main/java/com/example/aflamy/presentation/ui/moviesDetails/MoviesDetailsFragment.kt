@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.aflamy.R
 import com.example.aflamy.constance.API_Key
 import com.example.aflamy.databinding.FragmentMoviesDetailsBinding
-import com.example.aflamy.genrel.navOptionsAnimation
+import com.example.aflamy.genrel.showToast
 import com.example.aflamy.presentation.adapter.details.RvMovieTypesAdapter
 import com.example.aflamy.presentation.adapter.details.RvMoviesActorsAdapter
 import com.example.aflamy.presentation.adapter.details.RvMoviesVideosAdapter
@@ -62,19 +62,31 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
 
     private var currentMovie: MovieDetailsResponse? = null
 
-    var isTextExpanded = false
+    private var isTextExpanded = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
+        fetchData()
+        refreshData()
+        setupListener()
+    }
+
+    private fun fetchData() {
         fetchMovieDetails()
         fetchMovieVideos()
         fetchMovieActors()
         fetchSimilarMovies()
-        setupListener()
+        binding.root.isRefreshing = false
     }
 
+    private fun refreshData() {
+        binding.root.setOnRefreshListener {
+            fetchData()
+
+        }
+    }
     @SuppressLint("DefaultLocale")
     private fun assignData(model: MovieDetailsResponse?) {
         currentMovie = model
@@ -281,6 +293,7 @@ class MoviesDetailsFragment : BaseFragment<FragmentMoviesDetailsBinding>(),
                             state.message?.asString(requireContext()),
                             Toast.LENGTH_SHORT
                         ).show()
+                        showToast(state.message?.asString(requireContext()) ?: "",requireContext())
                         Log.e(
                             "TAG",
                             "fetchMovieDetails: ${state.message?.asString(requireContext())}"

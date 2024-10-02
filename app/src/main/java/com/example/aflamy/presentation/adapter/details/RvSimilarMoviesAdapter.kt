@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.aflamy.R
 import com.example.aflamy.databinding.ItemActorsBinding
 import com.example.aflamy.databinding.ItemSimilarMovieBinding
 import javax.inject.Inject
@@ -35,8 +36,8 @@ class RvSimilarMoviesAdapter @Inject constructor() :
 
                 Glide.with(root.context)
                     .load("https://image.tmdb.org/t/p/w500" + model.posterPath)
-                    //.placeholder(R.drawable.iv_no_image)
-                 //   .error(R.drawable.iv_no_image)
+                    .placeholder(R.drawable.no_movie)
+                    .error(R.drawable.no_movie)
                     .into(ivActorImage)
                 // Handle click event
                 root.setOnClickListener {
