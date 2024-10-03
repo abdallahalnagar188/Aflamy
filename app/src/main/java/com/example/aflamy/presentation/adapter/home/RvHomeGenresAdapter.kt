@@ -31,7 +31,7 @@ class RvHomeGenresAdapter @Inject constructor() :
             binding.apply {
                 movieTypeText.text = text.name
                 root.setOnClickListener {
-                    listener.onToRateItemClicked(text)
+                    listener.onGenresClicked(text)
                 }
             }
         }
@@ -43,7 +43,7 @@ class RvHomeGenresAdapter @Inject constructor() :
         this.listener = listener
     }
     interface OnItemClickListener {
-        fun onToRateItemClicked(model: GenreDto)
+        fun onGenresClicked(model: GenreDto)
     }
 
 

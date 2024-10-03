@@ -10,14 +10,11 @@ import androidx.viewbinding.ViewBinding
 import com.example.aflamy.R
 import com.example.aflamy.constance.API_Key
 import com.example.aflamy.databinding.FragmentSeeMorePopularMoviesBinding
-import com.example.aflamy.genrel.navOptionsAnimation
 import com.example.aflamy.presentation.adapter.home.PopularMoviesPagingAdapter
-import com.example.aflamy.presentation.dialog.LoadingDialog
 import com.example.aflamy.presentation.ui.BaseFragment
 import com.example.aflamy.presentation.viewmodel.HomeViewModel
 import com.example.domain.entity.models.MovieModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

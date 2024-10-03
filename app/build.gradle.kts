@@ -113,4 +113,7 @@ dependencies {
     // For Kotlin coroutines support
     implementation ("androidx.paging:paging-common-ktx:3.2.0")
 
+    implementation ("com.facebook.shimmer:shimmer:0.5.0")
+
+
 }

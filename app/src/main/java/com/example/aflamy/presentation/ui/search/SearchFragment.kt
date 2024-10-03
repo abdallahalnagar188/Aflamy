@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -48,28 +50,28 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(),
 
     private fun setupListeners() {
         binding.apply {
-            // Listen for changes in the search EditText
-//            searchEditText.addTextChangedListener(object : TextWatcher {
-//                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//
-//                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                    searchRunnable?.let { searchHandler.removeCallbacks(it) }
-//
-//                    // Debounce the search input to avoid searching on every keystroke
-//                    searchRunnable = Runnable {
-//                        val query = s.toString().trim()
-//                        if (query.isNotEmpty()) {
-//                            fetchPopularMovies(query)
-//                        }
-//                    }
-//
-//                    searchRunnable?.let {
-//                        searchHandler.postDelayed(it, 500) // 500ms delay before triggering search
-//                    }
-//                }
-//
-//                override fun afterTextChanged(s: Editable?) {}
-//            })
+          //   Listen for changes in the search EditText
+            searchEditText.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    searchRunnable?.let { searchHandler.removeCallbacks(it) }
+
+                    // Debounce the search input to avoid searching on every keystroke
+                    searchRunnable = Runnable {
+                        val query = s.toString().trim()
+                        if (query.isNotEmpty()) {
+                            fetchPopularMovies(query)
+                        }
+                    }
+
+                    searchRunnable?.let {
+                        searchHandler.postDelayed(it, 500) // 500ms delay before triggering search
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+            })
             searchButton.setOnClickListener {
                 val query = searchEditText.text.toString().trim()
                 if (query.isNotEmpty()) {
@@ -101,7 +103,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(),
 
     private fun observeSearchResults() {
         lifecycleScope.launch {
-            viewModel.getSearchResult(API_Key,"")?.collectLatest { pagingData ->
+            viewModel.getSearchResult(API_Key,"")?.collect { pagingData ->
                 adapter.submitData(pagingData)
             }
         }
@@ -116,7 +118,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(),
     override fun onItemClicked(model: MovieModel) {
         findNavController().navigate(R.id.moviesDetailsFragment, Bundle().apply {
             model.id?.let { putInt("movieId", it) }
-        },navOptionsAnimation())
+        })
     }
 }
 

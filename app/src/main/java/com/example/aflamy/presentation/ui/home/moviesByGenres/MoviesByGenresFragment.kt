@@ -13,7 +13,6 @@ import androidx.viewbinding.ViewBinding
 import com.example.aflamy.R
 import com.example.aflamy.constance.API_Key
 import com.example.aflamy.databinding.FragmentSeeMorePopularMoviesBinding
-import com.example.aflamy.genrel.navOptionsAnimation
 import com.example.aflamy.presentation.adapter.home.MoviesByGenresPagingAdapter
 import com.example.aflamy.presentation.ui.BaseFragment
 import com.example.aflamy.presentation.viewmodel.HomeViewModel
@@ -79,7 +78,7 @@ class MoviesByGenresFragment : BaseFragment<FragmentSeeMorePopularMoviesBinding>
         findNavController().navigate(
             R.id.moviesDetailsFragment, Bundle().apply {
                 model.id?.let { putInt("movieId", it) }
-            }, navOptionsAnimation()
+            }
         )
     }
 }

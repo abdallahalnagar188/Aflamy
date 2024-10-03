@@ -11,13 +11,11 @@ import androidx.viewbinding.ViewBinding
 import com.example.aflamy.R
 import com.example.aflamy.constance.API_Key
 import com.example.aflamy.databinding.FragmentSeeMorePopularMoviesBinding
-import com.example.aflamy.genrel.navOptionsAnimation
 import com.example.aflamy.genrel.showToast
 import com.example.aflamy.presentation.adapter.details.RvMoviesForActorsAdapter
 import com.example.aflamy.presentation.dialog.LoadingDialog
 import com.example.aflamy.presentation.ui.BaseFragment
 import com.example.domain.entity.dto.movieDetails.actors.moviesForActors.Cast
-import com.example.domain.entity.dto.movieDetails.actors.moviesForActors.Crew
 import com.example.domain.state.UiState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

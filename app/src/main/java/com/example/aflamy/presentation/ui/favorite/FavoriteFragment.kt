@@ -8,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.example.aflamy.R
 import com.example.aflamy.databinding.FragmentFavoriteBinding
-import com.example.aflamy.genrel.navOptionsAnimation
 import com.example.aflamy.presentation.adapter.wishlist.WishListAdapter
 import com.example.aflamy.presentation.ui.BaseFragment
 import com.example.aflamy.presentation.viewmodel.WishlistViewModel
@@ -54,6 +53,6 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>(),
     override fun onItemClicked(model: MovieModelForLocal) {
         findNavController().navigate(R.id.moviesDetailsFragment, Bundle().apply {
             model.id?.let { putInt("movieId", it) }
-        }, navOptionsAnimation())
+        })
     }
 }

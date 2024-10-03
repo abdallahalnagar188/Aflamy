@@ -1,7 +1,6 @@
 package com.example.aflamy.presentation.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -28,7 +27,6 @@ import com.example.aflamy.presentation.ui.home.viewmodel.UpComingMoviesViewModel
 import com.example.aflamy.presentation.viewmodel.HomeViewModel
 import com.example.domain.entity.dto.genres.GenreDto
 import com.example.domain.entity.models.MovieModel
-import com.example.domain.state.Resource
 import com.example.domain.state.UiState
 import com.example.domain.state.applyCommonSideEffects
 import dagger.hilt.android.AndroidEntryPoint
@@ -82,6 +80,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
         setupListeners()
         finishApp()
         fetchMovies()
+        // loadData()
 
     }
 
@@ -111,7 +110,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
         binding.swipeRefreshLayout.isRefreshing = false
     }
 
-
+    //    private fun loadData() {
+//        // Simulate data loading (e.g., using a ViewModel or making a network call)
+//        // Once data is loaded, hide the shimmer and show the content
+//
+//        binding.swipeRefreshLayout.postDelayed({
+//            // Hide shimmer and show content
+//            binding.shimmerLayout.stopShimmer()
+//            binding.shimmerLayout.visibility = View.GONE
+//
+//            // Show actual content
+//            binding.swipeRefreshLayout.visibility = View.VISIBLE
+//        }, 3000) // Delay of 3 seconds (for demonstration)
+//    }
     private fun setupListeners() {
         binding.tvSeeMorePopularMovies.setOnClickListener {
             findNavController().navigate(R.id.seeMorePopularMoviesFragment)
@@ -274,14 +285,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
         )
     }
 
-    override fun onToRateItemClicked(model: GenreDto) {
+    override fun onGenresClicked(model: GenreDto) {
        findNavController().navigate(
            R.id.moviesByGenresFragment,
            Bundle().apply {
                model.id?.let { putInt("genreId", it) }.also { model.name?.let { it1 -> putString("genreName", it1) } }
            },
        )
-
-        Log.e("genreId", "onToRateItemClicked: ${model.id}")
     }
 }

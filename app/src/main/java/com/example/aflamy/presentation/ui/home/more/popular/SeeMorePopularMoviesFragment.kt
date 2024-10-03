@@ -10,14 +10,11 @@ import androidx.viewbinding.ViewBinding
 import com.example.aflamy.R
 import com.example.aflamy.constance.API_Key
 import com.example.aflamy.databinding.FragmentSeeMorePopularMoviesBinding
-import com.example.aflamy.genrel.navOptionsAnimation
 import com.example.aflamy.presentation.adapter.home.PopularMoviesPagingAdapter
-import com.example.aflamy.presentation.dialog.LoadingDialog
 import com.example.aflamy.presentation.ui.BaseFragment
 import com.example.aflamy.presentation.viewmodel.HomeViewModel
 import com.example.domain.entity.models.MovieModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,11 +31,9 @@ class SeeMorePopularMoviesFragment : BaseFragment<FragmentSeeMorePopularMoviesBi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        LoadingDialog.showDialog()
         setupRecyclerView()
         fetchPopularMovies()
         setupListeners()
-        LoadingDialog.dismissDialog()
 
     }
 
@@ -53,7 +48,7 @@ class SeeMorePopularMoviesFragment : BaseFragment<FragmentSeeMorePopularMoviesBi
     private fun fetchPopularMovies() {
         // Collect the paging data from the ViewModel
         lifecycleScope.launch {
-            viewModel.getPopularMoviesInPages(apiKey = API_Key).collectLatest { pagingData ->
+            viewModel.getPopularMoviesInPages(apiKey = API_Key).collect { pagingData ->
                 adapter.submitData(pagingData)
             }
         }
