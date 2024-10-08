@@ -27,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/black_low"
-            android:fontFamily="@font/poppins_medium"
+            android:fontFamily="@font/cairo_medium"
             android:paddingHorizontal="@dimen/_8sdp"
             android:paddingVertical="@dimen/_6sdp"
             android:textColor="@color/white"

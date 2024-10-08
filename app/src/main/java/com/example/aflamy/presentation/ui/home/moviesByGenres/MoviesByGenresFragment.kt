@@ -1,5 +1,6 @@
 package com.example.aflamy.presentation.ui.home.moviesByGenres
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -65,6 +66,7 @@ class MoviesByGenresFragment : BaseFragment<FragmentSeeMorePopularMoviesBinding>
     }
 
 
+    @SuppressLint("SetTextI18n")
     private fun setupListeners() {
         binding.apply {
             topBar.ivBack.setOnClickListener {

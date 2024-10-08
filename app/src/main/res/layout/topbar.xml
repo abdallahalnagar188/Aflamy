@@ -30,7 +30,7 @@
         android:layout_weight="1"
         android:layout_marginEnd="@dimen/_10sdp"
         android:paddingEnd="@dimen/_8sdp"
-        android:fontFamily="@font/poppins_bold"
+        android:fontFamily="@font/cairo_extra_bold"
         tools:text="Popular Movies"
         android:textSize="@dimen/_14ssp"
         android:layout_gravity="center_vertical"

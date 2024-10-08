@@ -4,7 +4,7 @@
     android:id="@+id/movie_type_text"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:fontFamily="@font/poppins_medium"
+    android:fontFamily="@font/cairo_medium"
     android:paddingHorizontal="@dimen/_12sdp"
     android:paddingVertical="@dimen/_8sdp"
     android:layout_marginHorizontal="@dimen/_4sdp"

@@ -56,7 +56,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/card_view"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins_bold"
+                    android:fontFamily="@font/cairo_extra_bold"
                     android:text="@string/popular_movies"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_14ssp" />
@@ -69,7 +69,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/card_view"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:fontFamily="@font/poppins_medium"
+                    android:fontFamily="@font/cairo_medium"
                     android:text="@string/show_more"
                     android:padding="@dimen/_6sdp"
                     android:background="@drawable/see_more_background"
