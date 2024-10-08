@@ -84,6 +84,7 @@ class MoviesForActorsFragment : BaseFragment<FragmentSeeMorePopularMoviesBinding
     }
 
 
+
     private fun setupListeners() {
         binding.apply {
             topBar.ivBack.setOnClickListener {
