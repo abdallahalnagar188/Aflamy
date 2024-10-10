@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         LoadingDialog.init(this)
         StatusBarUtil.init(window)
         LocalUtil.init(this)
-      //  LocalUtil.loadLocal(this)
+        //LocalUtil.loadLocal(this)
         // Inflate layout using View Binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

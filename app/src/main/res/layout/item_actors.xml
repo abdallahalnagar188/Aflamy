@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/_100sdp"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/_140sdp"
     android:layout_margin="@dimen/_8sdp"
     app:cardCornerRadius="@dimen/_8sdp"
+    android:background="@color/transparent"
+    android:backgroundTint="@color/transparent"
     app:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +17,7 @@
         <ImageView
             android:id="@+id/ivActorImage"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_90sdp"
+            android:layout_height="@dimen/_105sdp"
             android:scaleType="centerCrop"
             android:src="@drawable/iv_no_image"
             app:layout_constraintEnd_toEndOf="parent"

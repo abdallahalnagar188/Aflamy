@@ -7,11 +7,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".presentation.ui.MainActivity">
+    tools:context=".presentation.ui.MainActivity"
+    android:layoutDirection="locale">
+    >
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+      >
+        >
 
 
         <androidx.fragment.app.FragmentContainerView
@@ -53,6 +57,7 @@
                 app:itemTextAppearanceInactive="@style/BottomNavigationTextAppearance"
                 app:itemRippleColor="@color/transparent"
                 app:itemBackground="@null"
+
                 />
         </com.google.android.material.bottomappbar.BottomAppBar>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
