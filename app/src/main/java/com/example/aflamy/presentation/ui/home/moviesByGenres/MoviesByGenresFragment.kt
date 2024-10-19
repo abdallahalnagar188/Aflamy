@@ -56,10 +56,6 @@ class MoviesByGenresFragment : BaseFragment<FragmentSeeMorePopularMoviesBinding>
         lifecycleScope.launch {
             viewModel.getMoviesByGenresInPages(apiKey = API_Key, genreId = args.genreId.toString())
                 .collect { pagingData ->
-                    // Debug the data
-                    pagingData.map { movieModel ->
-                        Log.e("PagingData", "Movie: ${movieModel.title}, ID: ${movieModel.id}")
-                    }
                     adapter.submitData(pagingData)
                 }
         }

@@ -47,7 +47,7 @@ class PopularMoviesPagingAdapter @Inject constructor() :
             binding.apply {
                 movieRating.text = String.format("%.1f", movie?.voteAverage ?: 0.0)
                 movieTitle.text = movie.title
-                movieYear.text = formatDate(movie.releaseDate?:"")
+                movieYear.text = movie.releaseDate?:""
 //                movieGenre.text = movie.overview
                 movieDuration.text = movie.originalLanguage.toString()
                 Glide.with(moviePoster.context)
