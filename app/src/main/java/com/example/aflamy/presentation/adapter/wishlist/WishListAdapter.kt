@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.aflamy.R
+import com.example.aflamy.databinding.ItemMovieHomeBinding
 import com.example.aflamy.databinding.ItemSeeMoreMoviesBinding
 import com.example.domain.entity.models.MovieModel
 import com.example.domain.entity.models.MovieModelForLocal
@@ -17,7 +19,7 @@ class WishListAdapter @Inject constructor() :
     private lateinit var listener: OnItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MovieViewHolder(
-        ItemSeeMoreMoviesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        ItemMovieHomeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
@@ -26,7 +28,7 @@ class WishListAdapter @Inject constructor() :
         }
     }
 
-    inner class MovieViewHolder(private val binding: ItemSeeMoreMoviesBinding) :
+    inner class MovieViewHolder(private val binding: ItemMovieHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
@@ -40,14 +42,16 @@ class WishListAdapter @Inject constructor() :
 
         fun bind(movie: MovieModelForLocal) {
             binding.apply {
-                movieRating.text = String.format("%.1f", movie.voteAverage ?: 0.0)
-                movieTitle.text = movie.title
-                movieYear.text = movie.releaseDate
+                tvRate.text = String.format("%.1f", movie?.voteAverage ?: 0.0)
+                tvMovieName.text = movie.title
+                tvDate.text = movie.releaseDate
 //                movieGenre.text = movie.overview
             //    movieDuration.text = movie.originalLanguage.toString()
-                Glide.with(moviePoster.context)
+                Glide.with(ivMovie.context)
                     .load("https://image.tmdb.org/t/p/w500${movie.posterPath}")
-                    .into(moviePoster)
+                    .placeholder(R.drawable.no_movie)
+                    .error(R.drawable.no_movie)
+                    .into(ivMovie)
             }
         }
     }
