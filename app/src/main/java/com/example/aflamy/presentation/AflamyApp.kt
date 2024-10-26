@@ -12,13 +12,7 @@ class AflamyApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        LocalUtil.init(this) // Initialize LocalUtil first
+        LocalUtil.init(this)
     }
-
-//    override fun getDefaultLanguage(context: Context): Locale {
-//        // Get the saved language after LocalUtil has been initialized
-//        val savedLanguage = LocalUtil.getLang() ?: "ar" // Default to Arabic
-//        return Locale(savedLanguage)
-//    }
 }
 

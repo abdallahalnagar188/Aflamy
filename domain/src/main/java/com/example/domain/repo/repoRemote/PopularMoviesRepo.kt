@@ -7,6 +7,4 @@ import kotlinx.coroutines.flow.Flow
 
 interface PopularMoviesRepo {
     suspend fun getPopularMovies(apiKey: String): Flow<DataState<BaseResponse<List<PopularResponse>>>>
-
-
 }

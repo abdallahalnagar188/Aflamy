@@ -15,7 +15,4 @@ class PopularMoviesRepoImpl(private val api: Api) : PopularMoviesRepo {
             api.getPopularMovies(apiKey)
         }
     }
-
-
-
 }

@@ -44,6 +44,7 @@ object RepoModule {
     fun providePopularMoviesRepo(apiService: Api): PopularMoviesRepo {
         return PopularMoviesRepoImpl(apiService)
     }
+
     @Provides
     @Singleton
     fun provideTopRateMoviesRepo(apiService: Api): TopRateMoviesRepo {
