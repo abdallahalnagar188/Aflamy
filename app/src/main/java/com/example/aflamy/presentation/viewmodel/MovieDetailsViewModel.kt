@@ -43,11 +43,7 @@ class MovieDetailsViewModel @Inject constructor(
                 _movieActors.value = UiState.Loading()
                 val movieActorsResponse = getMovieActorsUseCase(movieId, apiKey)
 
-                if (movieActorsResponse == null) {
-                    _movieActors.value = UiState.Empty()
-                } else {
-                    _movieActors.value = UiState.Success(movieActorsResponse)
-                }
+                _movieActors.value = UiState.Success(movieActorsResponse)
 
             } catch (e: Exception) {
                 _movieActors.value = UiState.Error(UiText.StringResource(R.string.error_message))
@@ -65,13 +61,7 @@ class MovieDetailsViewModel @Inject constructor(
 
                 val movieVideosResponse = getVideoUseCase(movieId, apiKey)
 
-                if (movieVideosResponse == null) {
-                    _movieVideos.value = UiState.Empty()
-                } else {
-                    _movieVideos.value = UiState.Success(movieVideosResponse)
-
-
-                }
+                _movieVideos.value = UiState.Success(movieVideosResponse)
 
             } catch (e: Exception) {
                 _movieVideos.value = UiState.Error(UiText.StringResource(R.string.error_message))

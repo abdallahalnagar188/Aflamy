@@ -97,9 +97,9 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
     //noinspection GradleDependency
     implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
-// ViewModel
+    // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-// Annotation processor
+    // Annotation processor
     //noinspection LifecycleAnnotationProcessorWithJava8
     kapt("androidx.lifecycle:lifecycle-compiler:2.7.0")
     //retrofit
